@@ -1,0 +1,110 @@
+<div class="container">
+	<div class="m-index">
+		<!--   提示    -->
+		<div class="index-prompt" style="position: relative;">
+			<div class="index-name" ng-if="app.user_info.PatName">您好：{{app.user_info.PatName}}</div>
+			<span>温馨提示：</span>
+			<p>初次就诊，没有建立账户信息的病友，请先【建卡】<br />已经建立账户信息的病友，请先插入您的诊疗卡，然后选择需要办理的业务。</p>
+		</div>
+		<div class="m-index-list">
+			<div class="text-center">
+				<ul>
+					<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.card'].hasMenu">
+						<a ui-sref="app.card">
+							<i class="icon-001"></i>
+							<div>
+								<!-- <h4>建卡/挂号</h4>
+								<p>办理诊疗卡、挂号、购买病历本</p> -->
+								<h4>挂号</h4>
+								<p>当班挂号</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.recharge'].hasMenu">
+						<a ui-sref="app.recharge">
+							<i class="icon-002"></i>
+							<div>
+								<h4>充值</h4>
+								<p>自助缴费充值现金/银行卡/支付宝</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-003" ng-hide="!routerMenuArr['app.reservation'].hasMenu">
+						<a ui-sref="app.reservation">
+							<i class="icon-003"></i>
+							<div>
+								<h4>预约</h4>
+								<p>预约挂号、预约取号、预约取消</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-004" ng-hide="!routerMenuArr['app.clinic'].hasMenu">
+						<a ng-click="openSref('app.clinic')">
+							<i class="icon-006"></i>
+							<div>
+								<h4>门诊缴费</h4>
+								<p>门诊清单、查询缴费</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-005" ng-hide="!routerMenuArr['app.assay'].hasMenu">
+						<a ng-click="openSref('app.assay')">
+							<i class="icon-004"></i>
+							<div>
+								<h4>报告单查询</h4>
+								<p>报告单查询</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-006" ng-hide="!routerMenuArr['app.hospital'].hasMenu">
+						<a ui-sref="app.hospital">
+							<i class="icon-006"></i>
+							<div>
+								<h4>住院清单</h4>
+								<p>住院日清单查询、打印</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-007 hidden">
+						<a ng-click="audio_list.pause('audio_001')">
+							<i class="icon-007"></i>
+							<div>
+								<h4>医疗评价</h4>
+								<p>对医院综合服务进行整体评价</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-008 hidden">
+						<a>
+							<i class="icon-008"></i>
+							<div>
+								<h4>导诊单</h4>
+								<p>导诊单打印</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-007" ng-hide="!routerMenuArr['app.medicine'].hasMenu">
+						<a ng-click="openSref('app.medicine')">
+							<i class="icon-008"></i>
+							<div>
+								<h4>发药取号</h4>
+								<p>窗口取药</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-008" ng-hide="!routerMenuArr['app.feeslist'].hasMenu">
+						<a ng-click="openSref('app.feeslist')">
+							<i class="icon-004"></i>
+							<div>
+								<h4>门诊费用清单</h4>
+								<p>门诊费用清单</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		
+	</div>
+</div>

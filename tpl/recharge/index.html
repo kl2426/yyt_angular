@@ -1,0 +1,83 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请选择您要办理的业务</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="hidden">
+				<div>
+					<input ng-model="data.bank_money" />
+					<a class="btn btn-info" ng-click="sendMoney()">充值</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					 流水号
+					<input ng-model="Trace_no" />
+					金额分
+					<input ng-model="data.bank_money" />
+					<a class="btn btn-info" ng-click="CorrectBankModel(Trace_no, data.bank_money)">充正</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="outMoney()">退卡</a>
+				</div>
+				
+				<div>
+					<a class="btn btn-info" ng-click="openCard()">打开端口</a>
+					<a class="btn btn-info" ng-click="wCard()">开始读取诊疗卡</a>
+					<a class="btn btn-info" ng-click="CloseTreatmentCard()">退出诊疗卡</a>
+				</div>
+				
+				
+				<div>
+					<br />
+					<a class="btn btn-info" ng-click="sendJson()">发送JSON</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt()">打印凭条</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt2()">打印凭条2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt3()">自助挂号凭条</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt4()">预约挂号凭条</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt5()">缴费凭条</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="printPt6()">发药窗口号凭条</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn btn-info" ng-click="showDg()">灯光</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
+					<br />
+					<a class="btn btn-info" ng-click="spk()">说话</a>
+					<a class="btn btn-info" ng-click="spkStop()">停止说话</a>
+				</div>
+				
+			</div>
+			
+
+			
+			<div class="m-index-list">
+				<div class="text-center">
+					<ul>
+						<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.recharge.recharge'].hasMenu">
+							<a ng-click="openSref('app.recharge.recharge')">
+								<i class="icon-002"></i>
+								<div>
+									<h4>住院预交金充值</h4>
+									<!--<p>可用现金/银行卡/支付宝/微信充值</p>-->
+									<p>银行卡充值</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002 hidden" ng-hide="!routerMenuArr['app.recharge.payment'].hasMenu">
+							<a ui-sref="app.recharge.payment">
+								<i class="icon-002"></i>
+								<div>
+									<h4>缴费</h4>
+									<!--<p>持诊疗卡、居民健康卡、联民卡缴费</p>-->
+									<p>银行卡就诊缴费</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

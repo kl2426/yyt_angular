@@ -1,0 +1,49 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请确认您的待缴费内容</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>缴费项目</th>
+							<th>数量</th>
+							<th>单位</th>
+							<th style="text-align: center;">单价（元）</th>
+							<th style="text-align: center;">费用（元）</th>
+						</tr>
+						<tr ng-repeat="item in table_data.table_res.rows" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.order}}</td>
+							<td>血常规</td>
+							<td>2</td>
+							<td>项</td>
+							<td style="text-align: center;">180</td>
+							<td style="text-align: center;">360</td>
+						</tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-main">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue" ui-sref="app.recharge.payment.pay">前往缴费</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

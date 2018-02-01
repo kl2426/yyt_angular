@@ -1,0 +1,101 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index" ng-if="status == 1">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请确认您的预约信息列表</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>姓名</th>
+							<th>科室</th>
+							<th>医生</th>
+							<th>就诊日期</th>
+							<th>状态</th>
+							<th style="text-align: center;">操作</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.index}}</td>
+							<td>{{item.orderInfo.patientName}}</td>
+							<td>{{item.orderInfo.deptName}}</td>
+							<td>{{item.orderInfo.doctName}}</td>
+							<td>
+								{{item.orderTime}}
+								 &nbsp;
+								{{item.startTime}}
+								&nbsp;
+								{{item.orderInfo.timeRange}}
+							</td>
+							<td>
+								<span ng-if="item.orderStatus == 1">已预约</span>
+								<span ng-if="item.orderStatus == 2">已支付</span>
+								<span ng-if="item.orderStatus == 3">已退号</span>
+								<span ng-if="item.orderStatus == 4">已取号</span>
+								<span ng-if="item.orderStatus == 5">待退费</span>
+							</td>
+							<td style="text-align: center;">
+								<label ng-if="item.orderStatus == 2"><i class="fa" ng-class="{true:'fa-check-square-o',false:'fa-square-o'}[item.checked ? true : false]"></i><input type="checkbox" ng-model="item.checked" ng-checked="item.checked" /></label>
+							</td>
+						</tr>
+						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue" ng-disabled="!btn_out_all" ng-if="data.page.row.length > 0" ng-click="outMark()">取号</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+		
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+
+		<!--  取号成功   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+		
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>取号成功,请取走您的凭条。</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

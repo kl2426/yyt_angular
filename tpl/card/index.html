@@ -1,0 +1,52 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请选择您要办理的业务</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="m-index-list">
+				<div class="text-center">
+					<ul>
+						<li class="bg-color bg-color-001 hidden" ng-hide="!routerMenuArr['app.card.id'].hasMenu">
+							<a ui-sref="app.card.id">
+								<i class="icon-001"></i>
+								<div>
+									<h4>身份证建卡</h4>
+									<p>持本人二代证现金办理医院的诊疗卡</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.card.department'].hasMenu">
+							<a ng-click="openSref('app.card.department')">
+								<i class="icon-001"></i>
+								<div>
+									<h4>挂号</h4>
+									<!--<p>持诊疗卡、居民健康卡、联民卡挂号</p>-->
+									<p>持诊疗卡挂号</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-003" ng-hide="!routerMenuArr['app.card.book'].hasMenu">
+							<a ui-sref="app.card.book">
+								<i class="icon-003"></i>
+								<div>
+									<h4>购买病历本</h4>
+									<p>购买病历本、持凭条到人工服务台领取</p>
+								</div>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

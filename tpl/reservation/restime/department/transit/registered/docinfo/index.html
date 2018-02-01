@@ -1,0 +1,57 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+					<font color="#f05050">
+						预约日期：{{restime_date | date : 'yyyy年MM月dd日'}}&nbsp;{{restime_date_week}}<br />
+							姓名：{{app.user_info.PatName}}
+							{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
+							{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
+							{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					</font>
+				</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   选择门诊  -->
+			<div class="m-card-department">
+				<div class="text-center">
+					<ul>
+						<li class="one-mz" style="height: 135px;" ng-class="{'disabled':item.last_no < 1}" ng-repeat="item in data.page.row" ng-click="openHref(item)">
+							<div class="one-morning"><span>{{item.timeRange}}</span></div>
+							<div class="one-body">
+								<div class="one-title">{{item.doctName}} - （{{item.visitCost}}元）</div>
+								<div class="one-name">{{item.startTime.substr(0,5)}} - {{item.endTime.substr(0,5)}}</div>
+								<div class="one-type">{{item.visitLevel}}</div>
+								<div class="one-name">{{item.deptName}}</div>
+							</div>
+							<div class="one-nub"><span>余号：{{item.order_lave}}</span></div>
+						</li>
+						
+						<li class="m-card-department-none" ng-if="items_loadding">
+							<div class="none-title">数据读取中</div>
+						</li>
+						<li class="m-card-department-none" ng-if="data.page.row.length < 1 && !items_loadding">
+							<div class="none-title">没有号源</div>
+						</li>
+						
+					</ul>
+				</div>
+				<div class="registered-page">
+					<span class="pull-left">预约挂号时将扣除费用，取号时不扣费。</span>
+					<div class="pull-right">
+						<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+						<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

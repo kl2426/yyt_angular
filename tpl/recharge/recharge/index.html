@@ -1,0 +1,42 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">住院预交金</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<table>
+						<tr>
+							<th>交费日期</th>
+							<th>交费金额</th>
+							<th>交款类型</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td>{{item.DepoDate}}</td>
+							<td>{{item.depo_amount}}</td>
+							<td>{{item.ZT}}</td>
+						</tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

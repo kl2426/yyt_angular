@@ -1,0 +1,48 @@
+<!--   发药取号   -->
+
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请点击取号</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>药品名称</th>
+							<th>开单科室</th>
+							<th>出药数量</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.index}}</td>
+							<td>{{item.MedName}}</td>
+							<td>{{item.PresKB}}</td>
+							<td>{{item.MedAMT}}</td>
+						</tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue btn-danger" ng-disabled="!show_btn" ng-if="data.page.row.length > 0" ng-click="medicine()">{{title_btn}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

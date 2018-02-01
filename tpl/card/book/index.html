@@ -1,0 +1,74 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index" ng-if="status == 1">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"><font color="#f05050">姓名：邱瑜伽<br />账户余额：160.5元</font></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div class="dep-modal">
+					<h4>您确认要购买病历本吗？</h4>
+					<p>病历本费用：0.5（元）</p>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ng-click="statusFn1()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main">取消</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   正在打印凭条   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>正在打印凭条，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   挂号成功   -->
+		<div class="m-card-id" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>购买病历本成功,请取走您的凭条。<br />请到到就诊科室分诊台领取</span>
+				</div>
+			</div>
+		</div>
+	
+	
+	</div>
+</div>

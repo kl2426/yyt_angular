@@ -1,0 +1,42 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请选择您要办理的业务</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="m-index-list">
+				<div class="text-center">
+					<ul>
+						<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.hospital.day'].hasMenu">
+							<a ui-sref="app.hospital.day">
+								<i class="icon-006"></i>
+								<div>
+									<h4>住院日清单</h4>
+									<p>住院日清单</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.hospital.total'].hasMenu">
+							<a ui-sref="app.hospital.total">
+								<i class="icon-006"></i>
+								<div>
+									<h4>住院总清单</h4>
+									<p>住院总清单</p>
+								</div>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

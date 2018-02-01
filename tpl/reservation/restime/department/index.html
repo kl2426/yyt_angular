@@ -1,0 +1,47 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+					<font color="#f05050">
+						预约日期：{{restime_date | date : 'yyyy年MM月dd日'}}&nbsp;{{restime_date_week}}<br />
+							姓名：{{app.user_info.PatName}}
+							{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
+							{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
+							{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					</font>
+				</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   选择科室  -->
+			<div class="m-card-department">
+				<div class="text-center">
+					<ul>
+						<li class="one-ks" ng-repeat="item in data.page.row"><a ui-sref="app.reservation.restime.department.transit({restime:restime, restime_date_week:restime_date_week, hosOrgCode:item.hosOrgCode,topHosDeptCode:item.hosDeptCode})"><span>{{item.deptName}}</span></a></li>
+						
+						<li class="m-card-department-none" ng-if="items_loadding">
+							<div class="none-title">数据读取中</div>
+						</li>
+						<li class="m-card-department-none" ng-if="data.page.row.length < 1 && !items_loadding">
+							<div class="none-title">没有号源</div>
+						</li>
+					</ul>
+				</div>
+				<div class="registered-page">
+					<span class="pull-left">预约挂号时将扣除费用，取号时不扣费。</span>
+					<div class="pull-right">
+						<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+						<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

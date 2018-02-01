@@ -1,0 +1,106 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index" ng-if="status == 1">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+					请确认您的缴费金额
+				</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   选择支付方式    -->
+			<div class="m-card-dep">
+				<div class="dep-modal" style="width:600px">
+					<h4>请选择支付方式</h4>
+					<p style="color: #fff;">共<font color="red">4</font>项</p>
+					<p style="color: #fff;">合计缴费金额<font color="red">1888.9</font>元</p>
+					<div class="dep-modal-btn" style="margin-top: 30px;margin-bottom: 10px;">
+						<a class="btn btn-main" ng-click="statusFn1('card')">诊疗卡支付</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="statusFn1('weixin')">微信支付</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="statusFn1('alipay')">支付宝支付</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		
+
+		<!--   二维码   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">扫描二维码支付</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>
+						<div class="col-xs-12 text-center"><img src="img/module/card/card004.png" width="200" height="200" /><p>支付宝付款</p></div>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		
+		
+		
+		
+		<!--   系统正在处理   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍候。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   正在打印凭条   -->
+		<div class="m-card-id" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>正在打印凭条，请稍候。。。</span>
+				</div>
+			</div>
+		</div>
+
+		<!--   支付成功   -->
+		<div class="m-card-id" ng-if="status == 5">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>支付成功，请取走您的凭条。</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,181 @@
+<!--    身份证建卡    -->
+<div class="container" ui-view>
+	<!--  放置身份证  -->
+	<div class="m-card-id" ng-if="status == 1">
+		<div class="m-card-header clearfix">
+			<div class="title">
+				<p>
+					请把您的二代身份证放到有身份证标示的读卡区。<br />
+					如果您的身份证在银行申请过诊疗卡，确认后可以直接取卡，如果没有申请<br />
+					过，确认后，放入钞票。
+				</p>
+				<p><font size="4" color="red">注意：二代身份证应该放置在感应区，切勿插入卡口。</font></p>
+			</div>
+			<div class="time">
+				<div class="time-bg">
+					<span>{{countdown_time}}</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-id-img">
+			<img src="img/module/card/card_id.png" />
+		</div>
+	</div>
+	
+	<!--  读取到身份证   -->
+	<div class="m-card-id" ng-if="status == 2">
+		<div class="m-card-header clearfix">
+			<div class="title">请确认您的证件信息并输入手机号码</div>
+			<div class="time">
+				<div class="time-bg">
+					<span>{{countdown_time}}</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="id-left">
+				<h4>请确认您的证件信息，并输入手机号码</h4>
+				<ul>
+					<li>
+						<span>姓名：</span>
+						<input type="text" ng-model="form_data.title_PeopleName" disabled="disabled" />
+					</li>
+					<li>
+						<span>性别：</span>
+						<input type="text" ng-model="form_data.PeopleSex" disabled="disabled" />
+					</li>
+					<li>
+						<span>民族：</span>
+						<input type="text" ng-model="form_data.Department" disabled="disabled" />
+					</li>
+					<li>
+						<span>地址：</span>
+						<input type="text" ng-model="form_data.PeopleAddress" disabled="disabled" />
+					</li>
+					<li>
+						<span>身份证号：</span>
+						<input type="text" ng-model="form_data.title_PeopleIDCode" disabled="disabled" />
+					</li>
+				</ul>
+				<div class="left-mobile">
+					<div class="mobile">
+						<span>手机号码：</span>
+						<div><input type="text" ng-model="form_data.mobile" disabled="disabled" /></div>
+					</div>
+					<div class="text-right">
+						<button class="btn btn-main" ng-click="ok()">确认</button>
+					</div>
+				</div>
+			</div>
+			<div class="id-right">
+				<ul>
+					<li><button ng-click="keyb(1)">1</button></li>
+					<li><button ng-click="keyb(2)">2</button></li>
+					<li><button ng-click="keyb(3)">3</button></li>
+					<li><button ng-click="keyb(4)">4</button></li>
+					<li><button ng-click="keyb(5)">5</button></li>
+					<li><button ng-click="keyb(6)">6</button></li>
+					<li><button ng-click="keyb(7)">7</button></li>
+					<li><button ng-click="keyb(8)">8</button></li>
+					<li><button ng-click="keyb(9)">9</button></li>
+					<li><button ng-click="keyb('backspace')">退格</button></li>
+					<li><button ng-click="keyb(0)">0</button></li>
+					<li><button ng-click="keyb('delete')">清除</button></li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<!--  现金充值   -->
+	<div class="m-card-id" ng-if="status == 3">
+		<div class="m-card-header clearfix">
+			<div class="title">当放钞口闪绿灯时放入现金，一次一张，可连续放入多张，当前接受面值为100元的纸币。办卡成功后将收取1元押金，剩余金额可在其他业务时使用。结束放现金，请按【结束放钞】按钮。</div>
+			<div class="time">
+				<div class="time-bg">
+					<span>{{countdown_time}}</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="desc-3-body">
+				<div class="col-xs-6 body-left">
+					<h3>账户姓名：王佳佳</h3>
+					<p>已放金额（元）：<span>{{money}}</span></p>
+					<div>
+						<a class="btn btn-main hidden">返回</a>
+						<a class="btn btn-main" ng-click="end()">结束放钞</a>
+					</div>
+				</div>
+				<div class="col-xs-6 body-right">
+					<img style="width: 520px; height: 350px;" src="img/module/card/card005.png" />
+				</div>
+				<div class="col-xs-12 body-p">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<!--  提示信息  -->
+	<div class="m-card-id" ng-if="status == 4">
+		<div class="m-card-header clearfix">
+			<div class="title"></div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="desc-msg">
+				<span>系统正在处理请稍候。。。</span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="m-card-id" ng-if="status == 5">
+		<div class="m-card-header clearfix">
+			<div class="title"></div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="desc-msg">
+				<span>正在打印凭条，请稍后。。。</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="m-card-id" ng-if="status == 6">
+		<div class="m-card-header clearfix">
+			<div class="title"></div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="desc-msg">
+				<span>建卡成功，请取走您的凭条和卡。</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="m-card-id" ng-if="status == 7">
+		<div class="m-card-header clearfix">
+			<div class="title">请取走您的诊疗卡，倒计时为0时系统将吞掉您的卡，<br />如果出卡失败，请耐心等待系统重试，不要离开。</div>
+			<div class="time">
+				<div class="time-bg">
+					<span>{{countdown_time}}</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-id-desc">
+			<div class="desc-msg">
+				<span><img src="img/module/card/card_id.png" width="300" height="300" /></span>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>

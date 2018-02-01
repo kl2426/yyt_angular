@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="m-header">
+		<div class="header-logo" ng-click="maintain.click(maintain.number)">
+			<a><img src="img/common/logo.png" /></a>
+			<!--<a>{{app.name}}</a>-->
+		</div>
+		<div class="header-btn">
+			<a class="btn btn-info btn-001" ng-click="locationBk()" ng-class="{hidden:$state.includes('app.index')}"><img src="img/common/icon-bk.png" />返&nbsp;回</a>
+			<a class="btn btn-info btn-002 {{!app.user_info ? '' : 'disabled'}}" ng-if="!isDevice" ng-class="{hidden:!$state.includes('app.index')}" ng-click="openInCard('7095271')"><img src="img/common/icon-exit.png" />插&nbsp;卡</a>
+			<a class="btn btn-info btn-002 {{!app.user_info ? '' : 'disabled'}}" ng-if="!isDevice" ng-click="getDeviceInfo('xyw000', '00:0E:C4:CE:99:78')" onclick="terminal_device.in_out_card.cb_in_ok_card('0','7290285')"  ng-class="{hidden:!$state.includes('app.index')}"><img src="img/common/icon-exit.png" />插&nbsp;卡2</a>
+			<a class="btn btn-info btn-002 {{app.user_info ? '' : 'disabled'}}" ng-click="outCard()" ng-class="{hidden:!$state.includes('app.index')}" ><img src="img/common/icon-exit.png" />退&nbsp;卡</a>
+			<a class="btn btn-info btn-003" ui-sref="app.index" ng-class="{hidden:$state.includes('app.index')}"><img src="img/common/icon-index.png" />主&nbsp;页</a>
+		</div>
+	</div>
+</div>

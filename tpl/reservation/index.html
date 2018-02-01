@@ -1,0 +1,51 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请选择您要办理的业务</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="m-index-list">
+				<div class="text-center">
+					<ul>
+						<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.reservation.restime'].hasMenu">
+							<a ng-click="openSref('app.reservation.restime')">
+								<i class="icon-001"></i>
+								<div>
+									<h4>预约挂号</h4>
+									<p>预约7天内的挂号</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.reservation.take'].hasMenu">
+							<a ng-click="openSref('app.reservation.take')">
+								<i class="icon-008"></i>
+								<div>
+									<h4>预约取号</h4>
+									<p>打印预约挂号凭条</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-003 hidden" ng-hide="!routerMenuArr['app.reservation.cancel'].hasMenu">
+							<a ng-click="openSref('app.reservation.cancel')">
+								<i class="icon-003"></i>
+								<div>
+									<h4>预约取消</h4>
+									<p>取消预约的挂号记录</p>
+								</div>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,70 @@
+<!--  住院清单    -->
+<div ui-view>
+	<div class="container">
+		
+		<!--   返回按钮  -->
+		<div class="header-btn" style="position: absolute; right: 250px; top: 35px;">
+			<a class="btn btn-info btn-001" ng-click="changeStatus()"><img src="img/common/icon-bk.png" />返&nbsp;回</a>
+		</div>
+		
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+					住院总清单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					姓名：{{PatName}}
+					{{PatSex == 1 ? '&nbsp;男' : ''}}
+					{{PatSex == 2 ? '&nbsp;女' : ''}}
+					{{PatSex == 9 ? '&nbsp;未知' : ''}}
+					<br />
+					<span ng-if="data.items.length > 0">住院天数：{{data.items[0].zy_ts}}天&nbsp;</span>
+					<span ng-if="data.items.length > 0">总费用：{{data.items[0].charge_total}}&nbsp;</span>
+				</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				
+				<div class="list-body">
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>项目名称</th>
+							<th class="text-right">单价</th>
+							<th class="text-right">数量</th>
+							<th class="text-right">金额</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.index}}</td>
+							<td>{{item.charge_name}}</td>
+							<td class="text-right">{{item.charge_price}}</td>
+							<td class="text-right">{{item.charge_amount}}</td>
+							<td class="text-right">{{item.charge}}</td>
+						</tr>
+						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main" ng-click="printAll()" ng-if="data.items_all.length > 0">打印住院总清单</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue btn-danger" ng-disabled="!btn_show" ng-if="data.items.length > 0" ng-click="total()">{{btn_title}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

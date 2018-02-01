@@ -1,0 +1,117 @@
+<div ui-view>
+	<div class="container">
+		<div class="hidden">
+			流水号：<input ng-model="bankRechargeObj.Trace_no" />
+			金额：<input ng-model="item.visitCost" />
+			<a class="btn btn-info" ng-click="bankCorrect(bankRechargeObj.Trace_no, item.money_minute)">充正</a>
+		</div>
+		
+		<div class="m-index" ng-if="status == 1">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+					<font color="#f05050">
+						预约日期：{{restime_date | date : 'yyyy年MM月dd日'}}&nbsp;{{restime_date_week}}<br />
+							姓名：{{app.user_info.PatName}}
+							{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
+							{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
+							{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					</font>
+				</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div class="dep-modal">
+					<h4>您确认要预约挂号吗？</h4>
+					<p>日期：{{restime_date | date : 'yyyy年MM月dd日'}}&nbsp;{{restime_date_week}}</p>
+					<p>时间：{{item.timeRange}}
+						&nbsp;{{item.startTime.substr(0,5)}}-{{item.endTime.substr(0,5)}}
+					</p>
+					<p>科别：{{item.deptName}}</p>
+					<p>医生：{{item.doctName}}</p>
+					<p>金额：<font color="red">{{item.visitCost}}</font>元</p>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ng-click="statusOk()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="locationBk('app.reservation.restime.department.transit.registered')">取消</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		
+		<div class="m-index" ng-if="status == 11">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div class="dep-modal" style="width: 610px; padding: 40px;">
+					<h4>您选择您的支付方式？</h4>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ng-click="statusFn1()">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main disabled">支付宝</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main disabled">微信</a>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		
+		
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   正在打印凭条   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>正在打印凭条，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   挂号成功   -->
+		<div class="m-card-id" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>挂号成功,请取走您的预约挂号凭条。</span>
+					<!--<a class="btn btn-blue" ng-click="bankOutCard()">退卡</a>-->
+				</div>
+			</div>
+		</div>
+	
+	
+	</div>
+</div>
