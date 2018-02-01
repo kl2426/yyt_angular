@@ -1,10 +1,10 @@
-'use strict';
-/**
- * Created by Administrator on 2016/7/21.
- * 
+/*
+ * @Author: wu 308822989@qq.com 
+ * @Date: 2018-02-01 16:37:36 
+ * @Last Modified by:   wu 
+ * @Last Modified time: 2018-02-01 16:37:36 
  */
-
-
+'use strict';
 
 
 /**
