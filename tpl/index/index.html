@@ -15,8 +15,8 @@
 							<div>
 								<!-- <h4>建卡/挂号</h4>
 								<p>办理诊疗卡、挂号、购买病历本</p> -->
-								<h4>挂号</h4>
-								<p>当班挂号</p>
+								<h4>建卡/挂号</h4>
+								<p>办理诊疗卡、挂号</p>
 							</div>
 						</a>
 					</li>
@@ -24,8 +24,8 @@
 						<a ui-sref="app.recharge">
 							<i class="icon-002"></i>
 							<div>
-								<h4>充值</h4>
-								<p>自助缴费充值现金/银行卡/支付宝</p>
+								<h4>住院预交金</h4>
+								<p>住院预交金</p>
 							</div>
 						</a>
 					</li>
@@ -34,7 +34,7 @@
 							<i class="icon-003"></i>
 							<div>
 								<h4>预约</h4>
-								<p>预约挂号、预约取号、预约取消</p>
+								<p>预约挂号、预约取号</p>
 							</div>
 						</a>
 					</li>
@@ -98,6 +98,15 @@
 							<div>
 								<h4>门诊费用清单</h4>
 								<p>门诊费用清单</p>
+							</div>
+						</a>
+					</li>
+					<li class="bg-color bg-color-009" ng-hide="!routerMenuArr['app.networkpayment'].hasMenu">
+						<a ui-sref="app.networkpayment">
+							<i class="icon-007"></i>
+							<div>
+								<h4>网络缴费凭条打印</h4>
+								<p>网络缴费凭条打印</p>
 							</div>
 						</a>
 					</li>

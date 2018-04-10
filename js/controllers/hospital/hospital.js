@@ -1,8 +1,8 @@
 /*
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:35:41 
- * @Last Modified by:   wu 
- * @Last Modified time: 2018-02-01 16:35:41 
+ * @Last Modified by: wu
+ * @Last Modified time: 2018-03-21 10:56:05
  */
 /**
  * 住院清单
@@ -204,9 +204,79 @@ app.controller('hospitalDayCtrl', function($scope,$interval,httpService,$filter)
 			$scope.status = 3;
 			//
 		}else{
-			$scope.systemError('读身份证失败请重试');
+			//
+			switch (obj.MsgCode) {
+				case '2005':
+					$scope.systemError('身份证读取不成功，请重新操作');
+					break;
+				case '2001':
+					$scope.systemError('初始化失败');
+					break;
+				case '2002':
+					$scope.systemError('读取数据异常');
+					break;
+				case '2004':
+					$scope.systemError('未检测到身份证或身份证放置不正确');
+					break;
+				case '2009':
+					$scope.systemError('关闭身份证阅读器失败');
+					break;
+				case '2099':
+					// $scope.systemError('读取超时');
+					break;
+				default:
+					break;
+			}
 //			//  返回选择医生
 //			$scope.locationBk();
+		}
+	}
+
+
+	//  诊疗卡 登录
+	$scope.statusCARD = function () {
+		if ($scope.app.user_info && $scope.app.user_info.card_no) {
+			//   已插入诊疗卡
+			//   性别
+			$scope.PatSex = $scope.app.user_info.PatSex;
+			//   身份证号/诊疗卡号
+			$scope.data.form.inp_no = $scope.app.user_info.HicNo;
+			// $scope.data.form.inp_no = '430521198911273807';
+			//   姓名
+			$scope.PatName = $scope.app.user_info.PatName;
+			//
+			$scope.bhc();
+			//  
+			tm.fnStopAutoRefreshfn(tm);
+			$scope.countdown_time = 240;
+			tm.fnAutoRefreshfn(tm);
+			//
+			$scope.status = 3;
+			
+		} else {
+			//   没有插入诊疗卡
+			$scope.openInCard();
+			//   插卡完成回调
+			$scope.openInCard_modalInstance.result.then(function (selectedItem) {
+				//   性别
+				$scope.PatSex = $scope.app.user_info.PatSex;
+				//   身份证号/诊疗卡号
+				$scope.data.form.inp_no = $scope.app.user_info.HicNo;
+				// $scope.data.form.inp_no = '430521198911273807';
+				//   姓名
+				$scope.PatName = $scope.app.user_info.PatName;
+				//
+				$scope.bhc();
+				//  
+				tm.fnStopAutoRefreshfn(tm);
+				$scope.countdown_time = 240;
+				tm.fnAutoRefreshfn(tm);
+				//
+				$scope.status = 3;
+
+			}, function () {
+				//
+			});
 		}
 	}
 	
@@ -398,15 +468,80 @@ app.controller('hospitalTotalCtrl', function($scope,$interval,httpService,$filte
 			//
 			$scope.status = 3;
 		}else{
+			//
+			switch (obj.MsgCode) {
+				case '2005':
+					$scope.systemError('身份证读取不成功，请重新操作');
+					break;
+				case '2001':
+					$scope.systemError('初始化失败');
+					break;
+				case '2002':
+					$scope.systemError('读取数据异常');
+					break;
+				case '2004':
+					$scope.systemError('未检测到身份证或身份证放置不正确');
+					break;
+				case '2009':
+					$scope.systemError('关闭身份证阅读器失败');
+					break;
+				case '2099':
+					// $scope.systemError('读取超时');
+					break;
+				default:
+					break;
+			}
 //			$scope.systemError('读身份证失败请重试');
 //			//  返回选择医生
 //			$scope.locationBk();
 		}
 	}
 	
-	//  诊疗卡
-	$scope.statusCARD = function(){
-		
+	//  诊疗卡 登录
+	$scope.statusCARD = function () {
+		if ($scope.app.user_info && $scope.app.user_info.card_no) {
+			//   已插入诊疗卡
+			//   性别
+			$scope.PatSex = $scope.app.user_info.PatSex;
+			//   身份证号/诊疗卡号
+			$scope.data.form.inp_no = $scope.app.user_info.HicNo;
+			// $scope.data.form.inp_no = '430202193909090050';
+			//   姓名
+			$scope.PatName = $scope.app.user_info.PatName;
+			//
+			getInpatientNO($scope.data.form.inp_no);
+			//  
+			tm.fnStopAutoRefreshfn(tm);
+			$scope.countdown_time = 240;
+			tm.fnAutoRefreshfn(tm);
+			//
+			$scope.status = 3;
+
+		} else {
+			//   没有插入诊疗卡
+			$scope.openInCard();
+			//   插卡完成回调
+			$scope.openInCard_modalInstance.result.then(function (selectedItem) {
+				//   性别
+				$scope.PatSex = $scope.app.user_info.PatSex;
+				//   身份证号/诊疗卡号
+				$scope.data.form.inp_no = $scope.app.user_info.HicNo;
+				// $scope.data.form.inp_no = '430521198911273807';
+				//   姓名
+				$scope.PatName = $scope.app.user_info.PatName;
+				//
+				getInpatientNO($scope.data.form.inp_no);
+				//  
+				tm.fnStopAutoRefreshfn(tm);
+				$scope.countdown_time = 240;
+				tm.fnAutoRefreshfn(tm);
+				//
+				$scope.status = 3;
+
+			}, function () {
+				//
+			});
+		}
 	}
 	
 	
@@ -620,6 +755,9 @@ app.controller('hospitalTotalInfoCtrl', function($scope,$interval,httpService,$f
 	//   打印总清单
 	$scope.total = function(){
 		zyPrint();
+		//
+		$scope.btn_title = '已打印总清单';
+		$scope.btn_show = false;
 	}
 	
 	

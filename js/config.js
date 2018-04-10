@@ -46,30 +46,26 @@ var app =
 					config.headers = config.headers || {};
 					if(opCookie.getCookie('access_token') && config.url.indexOf('/auth/login') < 0) {
 						config.headers['Authorization'] = 'Bearer ' + opCookie.getCookie('access_token');
-					}else if(config.url.indexOf('/oauth/token?grant_type=refresh_token') >= 0){
+					} else if(config.url.indexOf('/oauth/token?grant_type=refresh_token') >= 0) {
 						config.headers['Authorization'] = 'Bearer ' + opCookie.getCookie('refresh_token');
 					} else {
 						//config.headers['Authorization'] = 'Basic dGVzdDp0ZXN0';
 					};
 
 					//   hasadmin == on / off   on  管理员请求 放管理员token
-
-					if (config.headers.hasadmin == 'on' && opCookie.getCookie('access_admin_token') && config.url.indexOf('/auth/syslogin') < 0) {
+					if(config.headers.hasadmin == 'on' && opCookie.getCookie('access_admin_token') && config.url.indexOf('/auth/syslogin') < 0) {
 						config.headers['Authorization'] = 'Bearer ' + opCookie.getCookie('access_admin_token');
-					} else if (config.headers.hasadmin == 'on' && config.url.indexOf('/auth/syslogin?grant_type=refresh_token') >= 0) {
+					} else if(config.headers.hasadmin == 'on' && config.url.indexOf('/auth/syslogin?grant_type=refresh_token') >= 0) {
 						config.headers['Authorization'] = 'Bearer ' + opCookie.getCookie('refresh_admin_token');
 					} else {
 						//config.headers['Authorization'] = 'Basic dGVzdDp0ZXN0';
 					};
 
-
 					return config;
 				},
 
 				response: function(response) {
-					//console.log(response)
 					//   invalid_token
-
 					return response || $q.when(response);
 				},
 
@@ -78,14 +74,13 @@ var app =
 					if(response.status == 401 && response.data.error == 'invalid_token') {
 
 						opCookie.clearCookie('access_token');
-						//console.log(opCookie.getCookie('access_token'))
 
 						var SessionService = $injector.get('SessionService');
 						var $http = $injector.get('$http');
 						var deferred = $q.defer();
-						
+
 						//   是否有cookie用户信息
-						if(!opCookie.getCookie('user_info')){
+						if(!opCookie.getCookie('user_info')) {
 							//   没有用户信息跳转到登录
 							window.location.href = '/#/access/signin';
 						}
@@ -101,7 +96,7 @@ var app =
 						});
 					}
 					//   刷新token失败
-					if(response.config.url.indexOf('/oauth/token?grant_type=refresh_token') >= 0 && response.data.error == 'invalid_token'){
+					if(response.config.url.indexOf('/oauth/token?grant_type=refresh_token') >= 0 && response.data.error == 'invalid_token') {
 						window.location.href = '/#/access/signin';
 					}
 					return $q.reject(response);
@@ -110,31 +105,29 @@ var app =
 		}])
 	}])
 
-
-
-app.factory('SessionService', ['$http', '$q', 'httpService','opCookie', function($http, $q, httpService,opCookie) {
+app.factory('SessionService', ['$http', '$q', 'httpService', 'opCookie', function($http, $q, httpService, opCookie) {
 	var token = null;
 	var sessionService = {};
 	var differred = $q.defer();
 
 	sessionService.readToken = function() {
 		return $http({
-			method: 'POST',
-			url: httpService.API.origin + '/oauth/token?grant_type=refresh_token'  
-			//   &username=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).useraccount  + '&password=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).userpasswd
-		})
-		.success(function(res) {
-			opCookie.setCookie('access_token',res.access_token,24*60*60);
-			opCookie.setCookie('refresh_token',res.refresh_token,4*60*60);
-			//console.log('Auth Success and token received: ' + JSON.stringify(res.data));
+				method: 'POST',
+				url: httpService.API.origin + '/oauth/token?grant_type=refresh_token'
+				//   &username=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).useraccount  + '&password=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).userpasswd
+			})
+			.success(function(res) {
+				opCookie.setCookie('access_token', res.access_token, 24 * 60 * 60);
+				opCookie.setCookie('refresh_token', res.refresh_token, 4 * 60 * 60);
+				//console.log('Auth Success and token received: ' + JSON.stringify(res.data));
 
-			// Extract the token details from the received JSON object
-			//token = res.data;
-			differred.resolve(res);
-		}, function(res) {
-			console.log('Error occurred : ' + JSON.stringify(res));
-			differred.reject(res);
-		})
+				// Extract the token details from the received JSON object
+				//token = res.data;
+				differred.resolve(res);
+			}, function(res) {
+				console.log('Error occurred : ' + JSON.stringify(res));
+				differred.reject(res);
+			})
 	};
 
 	sessionService.getToken = function() {

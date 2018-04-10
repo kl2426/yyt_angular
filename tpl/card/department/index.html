@@ -5,12 +5,7 @@
 			<div class="m-card-header clearfix">
 				<div class="title">
 					<font color="#f05050">
-						请选择您要挂号的科室：<br />
-						挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br />
-						姓名：{{app.user_info.PatName}}
-						{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-						{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-						{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+						请选择您要挂号的科室：<br /> 挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 						<br />
 					</font>
 				</div>
@@ -24,8 +19,10 @@
 			<div class="m-card-department">
 				<div class="text-center">
 					<ul>
-						<li class="one-ks" ng-repeat="item in data.page.row"><a ui-sref="app.card.department.registered({deptCode:item.dept_code,deptName:item.dept_name})"><span>{{item.dept_name}}</span></a></li>
-						
+						<li class="one-ks" ng-repeat="item in data.page.row">
+							<a ui-sref="app.card.department.registered({deptCode:item.dept_code,deptName:item.dept_name,deptArea:item.Dept_area})"><span>{{item.dept_name}}</span></a>
+						</li>
+
 						<li class="m-card-department-none" ng-if="items_loadding">
 							<div class="none-title">数据读取中</div>
 						</li>
@@ -35,15 +32,14 @@
 					</ul>
 				</div>
 				<div class="registered-page">
-					<span class="pull-left"></span>
+					<span class="pull-left">挂号和预约挂号之后不可以退号</span>
 					<div class="pull-right">
 						<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
 						<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
 	</div>
 </div>

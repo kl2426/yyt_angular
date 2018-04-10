@@ -1,24 +1,24 @@
 /*
  * @Author: wu 308822989@qq.com 
- * @Date: 2018-02-01 16:34:54 
+ * @Date: 2018-02-01 16:36:20 
  * @Last Modified by: wu
- * @Last Modified time: 2018-03-08 11:52:31
+ * @Last Modified time: 2018-03-01 15:37:07
  */
 'use strict';
 
 /**
- * 建卡/挂号
+ * 取网络缴费凭条
  */
-app.controller('cardCtrl', function($scope, $interval) {
+app.controller('networkpaymentCtrl', function($scope, $interval, $timeout, $filter, httpService) {
 
 	//   当前页面返回秒数
-	$scope.countdown_time = 20;
+	$scope.countdown_time = 60;
 
 	//开始定义定时器
-	var tm = $scope.setglobaldata.gettimer("card");
-	if(tm.Key != "card") {
-		tm.Key = "card";
-		tm.keyctrl = "app.card";
+	var tm = $scope.setglobaldata.gettimer("networkpaymentCtrl");
+	if(tm.Key != "networkpaymentCtrl") {
+		tm.Key = "networkpaymentCtrl";
+		tm.keyctrl = "app.networkpayment";
 		tm.fnAutoRefresh = function() {
 			console.log("开始调用定时器");
 			tm.interval = $interval(function() {
@@ -34,7 +34,7 @@ app.controller('cardCtrl', function($scope, $interval) {
 			}, 1000);
 		};
 		tm.fnStopAutoRefresh = function() {
-			$scope.countdown_time = 20;
+			$scope.countdown_time = 60;
 			console.log("进入取消方法");
 			if(tm.interval != null) {
 				$interval.cancel(tm.interval);
@@ -50,10 +50,8 @@ app.controller('cardCtrl', function($scope, $interval) {
 	tm.fnAutoRefreshfn(tm);
 
 	var run = function() {
-		//   停止语音
-		$scope.audio_list.allStop();
 		//   播放声音
-		$scope.audio_list.play('audio_001');
+
 	}
 	run();
 

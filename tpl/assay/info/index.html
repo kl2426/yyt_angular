@@ -34,8 +34,8 @@
 							<td>{{item.name}}</td>
 							<td>{{item.result}}</td>
 							<td>{{item.unit}}</td>
-							<td>{{item.status}}</td>
-							<td>{{item.range}}</td>
+							<td>{{item.status == 'null' ? '' : item.status}}</td>
+							<td>{{item.range == 'null' ? '' : item.range}}</td>
 						</tr>
 						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
 						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>

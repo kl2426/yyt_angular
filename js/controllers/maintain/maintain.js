@@ -1,8 +1,8 @@
 /*
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:35:49 
- * @Last Modified by:   wu 
- * @Last Modified time: 2018-02-01 16:35:49 
+ * @Last Modified by: wu
+ * @Last Modified time: 2018-03-08 14:12:22
  */
 'use strict';
 
@@ -140,9 +140,12 @@ app.controller('modalMaintainMenuCtrl', function($scope,$interval,$modal,$modalI
 	//
 	$scope.data = {
 		items: [
-			{ name: 'modal_receipt', title: '当日凭条补打', checked: false },
-			{name:'modalMaintainRestart', title:'重起系统', checked:true},
-			{name:'modalMaintainClose', title:'退出系统', checked:true},
+			{ name: 'modal_receipt', title: '当日凭条补打', checked: false, define_checked: true },
+			{ name: 'modalMaintainError', title: '系统维护中', checked: false, define_checked: true },
+			{ name: 'modalMaintainBankOutCard', title: '退银行卡', checked: true, define_checked: true },
+			{ name:'modalMaintainCardOut', title:'退诊疗卡', checked:true, define_checked:true},
+			{ name: 'modalMaintainRestart', title: '重起系统', checked: true, define_checked: true},
+			{ name: 'modalMaintainClose', title: '退出系统', checked: true, define_checked: true},
 		]
 	}
 	
@@ -172,7 +175,16 @@ app.controller('modalMaintainMenuCtrl', function($scope,$interval,$modal,$modalI
 	}
 	
 	
+	//  退诊疗卡
+	$scope.cardOut = function () {
+		//   硬件退卡
+		$scope.items.scope.outCard_null();
+	}
 	
+	//   银行卡退卡
+	$scope.bankOutCard = function () {
+		window.terminal && window.terminal.CloseBankModel();
+	}
 	
 	
 	//   退出系统
@@ -199,6 +211,15 @@ app.controller('modalMaintainMenuCtrl', function($scope,$interval,$modal,$modalI
 			case 'modalMaintainClose':
 				$scope.modalMaintainClose();
 			break;
+			case 'modalMaintainBankOutCard':
+				$scope.bankOutCard();
+				break;
+			case 'modalMaintainCardOut':
+				$scope.cardOut();
+				break;
+			case 'modalMaintainError':
+				$scope.items.scope.modelOpenPrintError('系统维护中暂停使用');
+				break;
 		}
 	}
 	
@@ -218,7 +239,7 @@ app.controller('modalMaintainMenuCtrl', function($scope,$interval,$modal,$modalI
 		var temp_data = $scope.items.scope.app.admin_info.userRights;
 		for(var i in $scope.data.items){
 			for(var b in temp_data){
-				if(temp_data[b].menuCode == $scope.data.items[i].name){
+				if (temp_data[b].menuCode == $scope.data.items[i].name || $scope.data.items[i].define_checked){
 					$scope.data.items[i].checked = true;
 				}
 			}

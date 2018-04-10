@@ -11,7 +11,7 @@
 				<div class="m-card-department">
 					<div class="text-center">
 						<ul>
-							<li class="one-ks" ng-repeat="item in data.items" ng-hide="!item.checked"><a ng-click="tapClick(item)"><span>{{item.title}}</span></a></li>
+							<li class="one-ks" ng-repeat="item in data.items" ng-hide="!item.checked || define_checked"><a ng-click="tapClick(item)"><span>{{item.title}}</span></a></li>
 						</ul>
 					</div>
 				</div>

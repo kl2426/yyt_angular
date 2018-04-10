@@ -4,11 +4,7 @@
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					请确认您的待缴费内容<br />
-					姓名：{{app.user_info.PatName}}
-					{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-					{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-					{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					请确认您的待缴费内容<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -16,7 +12,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
 				<div class="list-body">
@@ -39,8 +35,12 @@
 								<a class="btn btn-danger" ui-sref="app.clinic.info({PrescriptionID:item.PrescriptionID, registegOrderID:item.registegOrderID, PresDT:item.PresDT, ExecDeptName:item.ExecDeptName})">明细</a>
 							</td>
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
 					<div class="page clearfix">
 						<span class="pull-left"></span>
@@ -48,20 +48,16 @@
 							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
 							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<span ng-if="data.clinic_has_one && data.page.row.length > 0" style="font-size: 30px; line-height: 56px; display: inline-block; vertical-align: top;">总金额：<font color="red">{{data.clinic_sum}}</font>元</span>
-							
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span ng-if="data.clinic_has_one && data.page.row.length > 0" style="font-size: 30px; line-height: 56px; display: inline-block; vertical-align: top;">总金额：<font color="red">{{data.clinic_sum}}</font>元</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<span ng-if="!data.clinic_has_one" style="font-size: 30px; line-height: 56px; display: inline-block; vertical-align: top;">多个挂号记录不能同时缴费</span>
 							<a ng-if="data.clinic_has_one && data.page.row.length > 0" class="btn btn-blue btn-danger" ng-click="statusOk()">缴费</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
-		
-		
+
 		<!--     -->
 		<div class="m-index" ng-if="status == 2">
 			<!--   提示    -->
@@ -79,9 +75,72 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
-		
-		
+
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+
+		<!--   成功   -->
+		<!-- <div class="m-card-id" ng-if="status == 4"> -->
+		<!--   提示    -->
+		<!-- <div class="m-card-header clearfix">
+						<div class="title"></div>
+						<div class="time">
+							<div class="time-bg">
+								<span>{{countdown_time}}</span>
+							</div>
+						</div>
+					</div>
+				
+					<div class="card-id-desc">
+						<div class="desc-msg">
+							<span>缴费成功,请取走您的凭条与银行卡。
+							<br /> 如需发票请到七号窗口打印</span>
+						</div>
+					</div>
+				</div> -->
+
+		<!--   是否跳转到打印到药凭条    -->
+		<div class="m-index" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+				</div>
+				<div class="time" ng-if="countdown_time > -1">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div style="text-align: center; font-size: 30px; color: #fff;  margin-bottom: -50px;">
+					<span>缴费成功,请取走您的凭条与银行卡。
+						<br /> 如需发票请到七号窗口打印</span>
+				</div>
+				<div class="dep-modal">
+					<h4>是否需打印取药凭条：</h4>
+					<p>是：进入打印凭条界面，请点击取药凭条。</p>
+					<p>取消：暂不打印取药凭条。</p>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ui-sref="app.medicine">是</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="locationBk()">取消</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 </div>

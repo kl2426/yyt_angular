@@ -1,0 +1,61 @@
+<div ui-view>
+	<div class="container">
+		<div class="m-index">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">请选择您要办理的业务</div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="m-index-list">
+				<div class="text-center">
+					<ul>
+						<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.networkpayment.clinic'].hasMenu">
+							<a ng-click="openSref('app.networkpayment.clinic')">
+								<i class="icon-008"></i>
+								<div>
+									<h4>缴费凭条打印</h4>
+									<p>缴费凭条打印</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.networkpayment.department'].hasMenu">
+							<a ng-click="openSref('app.networkpayment.department')">
+								<i class="icon-008"></i>
+								<div>
+									<h4>网络挂号凭条打印</h4>
+									<p>网络挂号凭条打印</p>
+								</div>
+							</a>
+						</li>
+
+						<!-- <li class="bg-color bg-color-001">
+							<a ui-sref="app.networkpayment.clinic">
+								<i class="icon-001"></i>
+								<div>
+									<h4>缴费凭条打印</h4>
+									<p>缴费凭条打印</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-002">
+							<a ui-sref="app.networkpayment.department">
+								<i class="icon-001"></i>
+								<div>
+									<h4>网络凭条打印</h4>
+									<p>网络凭条打印</p>
+								</div>
+							</a>
+						</li> -->
+						
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

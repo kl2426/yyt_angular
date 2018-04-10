@@ -1,8 +1,8 @@
 /*
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:37:36 
- * @Last Modified by:   wu 
- * @Last Modified time: 2018-02-01 16:37:36 
+ * @Last Modified by: wu
+ * @Last Modified time: 2018-02-06 14:54:34
  */
 'use strict';
 
@@ -41,7 +41,7 @@ angular.module('app').factory('httpService', function ($http, $q, $filter) {
     }
 
     //   超时时间 毫秒
-    var time_out = 1000 * 30;
+    var time_out = 1000 * 120;
 
     //
     return {
@@ -64,12 +64,19 @@ angular.module('app').factory('httpService', function ($http, $q, $filter) {
             })
                 .success(function (data, status, headers, config) {
                     // log
-                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
-                    deferred.resolve(data);
+                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                    //  处理超时
+                    var temp_obj = angular.copy(error_obj);
+                    if (status == 110){
+                        temp_obj.code = -1;
+                        deferred.resolve(temp_obj);
+                    }else{
+                        deferred.resolve(data);
+                    }
                 })
                 .error(function (data, status, headers, config) {
                     // log
-                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
                     //  处理超时与错误
                     var temp_obj = angular.copy(error_obj);
                     temp_obj.code = status;
@@ -111,14 +118,18 @@ angular.module('app').factory('httpService', function ($http, $q, $filter) {
                 params: params ? params : {}
             }).success(function (data, status, headers, config) {
                 // log
-                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
-
-                //          		var temp_obj = {data:data,status:status,headers:headers,config:config};
-                var temp_obj = data;
-                deferred.resolve(temp_obj);
+                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                //  处理超时
+                var temp_obj = angular.copy(error_obj);
+                if (status == 110) {
+                    temp_obj.code = -1;
+                    deferred.resolve(temp_obj);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function (data, status, headers, config) {
                 // log
-                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
                 //  处理超时与错误
                 var temp_obj = angular.copy(error_obj);
                 temp_obj.code = status;
@@ -162,12 +173,12 @@ angular.module('app').factory('httpService', function ($http, $q, $filter) {
             })
                 .success(function (data, status, headers, config) {
                     // log
-                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
                     deferred.resolve(data);
                 })
                 .error(function (data, status, headers, config) {
                     // log
-                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                    window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
                     //  处理超时与错误
                     var temp_obj = angular.copy(error_obj);
                     temp_obj.code = status;
@@ -190,14 +201,14 @@ angular.module('app').factory('httpService', function ($http, $q, $filter) {
                 params: params ? params : {}
             }).success(function (data, status, headers, config) {
                 // log
-                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
 
                 //          		var temp_obj = {data:data,status:status,headers:headers,config:config};
                 var temp_obj = data;
                 deferred.resolve(temp_obj);
             }).error(function (data, status, headers, config) {
                 // log
-                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
+                window.terminal && window.terminal.WriteLog($filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss') + ' res url:' + url + ' : data:' + JSON.stringify(data) + '。 headers:' + JSON.stringify(headers) + '。');
                 //  处理超时与错误
                 var temp_obj = angular.copy(error_obj);
                 temp_obj.code = status;

@@ -25,16 +25,20 @@
 							<th style="text-align: center;">序号</th>
 							<!--<th>诊断信息</th>-->
 							<th>检验名称</th>
+							<!-- <th>检验样本</th> -->
 							<th>送检时间</th>
-							<th>患者姓名</th>
+							<th>审核医生</th>
+							<th>审核时间</th>
 							<th style="text-align: center;">操作</th>
 						</tr>
 						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
 							<td style="text-align: center;">{{item.index}}</td>
 							<!--<td>{{item.Disease}}</td>-->
-							<td>{{item.assay_name}}</td>
-							<td>{{item.send_time.substr(0,19)}}</td>
-							<td>{{item.patient_name}}</td>
+							<td>{{item.sample_name}}</td>
+							<!-- <td>{{item.sample_name}}</td> -->
+							<td>{{item.send_time.substr(0,16)}}</td>
+							<td>{{item.audit_doctor}}</td>
+							<td>{{item.audit_time.substr(0,16)}}</td>
 							<td style="text-align: center;">
 								<a class="btn btn-danger" ui-sref="app.assay.info({assay_no:item.assay_no})">明细</a>
 							</td>

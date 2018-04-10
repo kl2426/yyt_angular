@@ -76,6 +76,71 @@
 			</div>
 		
 		</div>
+
+
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+		
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   成功   -->
+		<!-- <div class="m-card-id" ng-if="status == 4"> -->
+			<!--   提示    -->
+			<!-- <div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+		
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>缴费成功,请取走您的凭条与银行卡。
+					<br /> 如需发票请到七号窗口打印</span>
+				</div>
+			</div>
+		</div> -->
+
+		<!--   是否跳转到打印到药凭条    -->
+		<div class="m-index" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title">
+				</div>
+				<div class="time" ng-if="countdown_time > -1">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div style="text-align: center; font-size: 30px; color: #fff;  margin-bottom: -50px;">
+					<span>缴费成功,请取走您的凭条与银行卡。
+						<br /> 如需发票请到七号窗口打印</span>
+				</div>
+				<div class="dep-modal">
+					<h4>是否需打印取药凭条：</h4>
+					<p>是：进入打印凭条界面，请点击取药凭条。</p>
+					<p>取消：暂不打印取药凭条。</p>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ui-sref="app.medicine">是</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="locationBk()">取消</a>
+					</div>
+				</div>
+			</div>
+		
+		</div>
 		
 		
 		

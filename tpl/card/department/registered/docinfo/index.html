@@ -5,11 +5,7 @@
 			<div class="m-card-header clearfix">
 				<div class="title">
 					<font color="#f05050">
-						挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br />
-						姓名：{{app.user_info.PatName}}
-						{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-						{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-						{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+						挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 						<br />
 					</font>
 				</div>
@@ -23,16 +19,16 @@
 			<div class="m-card-department">
 				<div class="text-center">
 					<ul>
-						<li class="btn one-mz" ng-class="{'disabled':item.last_no < 1}" ng-repeat="item in data.page.row" ui-sref="app.card.department.registered.docinfo.dep({deptName:deptName, doct_name:doct_name, sumMoney:item.sumMoney, am_pm:item.am_pm, schedulingID:item.pbxh, clinic_time_start:item.clinic_time_start, clinic_time_end:item.clinic_time_end})">
+						<li class="btn one-mz" ng-class="{'disabled':item.last_no < 1 || !item.ampm_show}" ng-repeat="item in data.page.row" ui-sref="app.card.department.registered.docinfo.dep({deptName:deptName, doct_name:doct_name, sumMoney:item.sumMoney, am_pm:item.am_pm, schedulingID:item.pbxh, clinic_time_start:item.clinic_time_start, clinic_time_end:item.clinic_time_end})">
 							<div class="one-morning"><span ng-if="ampm.val == item.am_pm" ng-repeat="ampm in data.am_pm">{{ampm.name}}</span></div>
 							<div class="one-body">
 								<div class="one-title">{{item.doct_name}} - （{{item.sumMoney}}元）</div>
 								<div class="one-type">{{item.clinic_type}}</div>
 								<div class="one-name">{{item.deptName}}</div>
 							</div>
-							<div class="one-nub"><span>余号：{{item.last_no}}</span></div>
+							<div class="one-nub"><span>余号：{{item.last_no >= 1 ? item.last_no : '无号'}}</span></div>
 						</li>
-						
+
 						<li class="m-card-department-none" ng-if="items_loadding">
 							<div class="none-title">数据读取中</div>
 						</li>
@@ -42,15 +38,14 @@
 					</ul>
 				</div>
 				<div class="registered-page">
-					<span class="pull-left"></span>
+					<span class="pull-left">挂号和预约挂号之后不可以退号</span>
 					<div class="pull-right">
 						<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
 						<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
 	</div>
 </div>
