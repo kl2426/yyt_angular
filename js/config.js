@@ -1,8 +1,8 @@
 /*
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:38:37 
- * @Last Modified by:   wu 
- * @Last Modified time: 2018-02-01 16:38:37 
+ * @Last Modified by: wu
+ * @Last Modified time: 2018-05-28 19:59:22
  */
 // config
 
@@ -114,12 +114,10 @@ app.factory('SessionService', ['$http', '$q', 'httpService', 'opCookie', functio
 		return $http({
 				method: 'POST',
 				url: httpService.API.origin + '/oauth/token?grant_type=refresh_token'
-				//   &username=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).useraccount  + '&password=' + JSON.parse(unescape(opCookie.getCookie('user_info'))).userpasswd
 			})
 			.success(function(res) {
 				opCookie.setCookie('access_token', res.access_token, 24 * 60 * 60);
 				opCookie.setCookie('refresh_token', res.refresh_token, 4 * 60 * 60);
-				//console.log('Auth Success and token received: ' + JSON.stringify(res.data));
 
 				// Extract the token details from the received JSON object
 				//token = res.data;

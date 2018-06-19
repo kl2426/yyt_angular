@@ -48,17 +48,6 @@ angular.module('app')
 							]
 						}
 					})
-					/*.state('app.dashboard-v2', {
-						url: '/dashboard-v2',
-						templateUrl: 'tpl/app_dashboard_v2.html',
-						resolve: {
-							deps: ['$ocLazyLoad',
-								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/chart.js']);
-								}
-							]
-						}
-					})*/
 
 					//  =======================建卡/挂号==============================
 					//   建卡/挂号
@@ -69,7 +58,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/card/card.js']);
+									return $ocLazyLoad.load(['js/controllers/card/index.js']);
 								}
 							]
 						}
@@ -83,7 +72,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/card/id.js']);
+									return $ocLazyLoad.load(['js/controllers/card/id/index.js']);
 								}
 							]
 						}
@@ -97,25 +86,11 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/card/registered.js']);
+									return $ocLazyLoad.load(['js/controllers/card/department/index.js']);
 								}
 							]
 						}
 					})
-
-					//   挂号 选择门诊
-					//            .state('app.card.department.transit', {
-					//                url: '/transit',
-					//                templateUrl: 'tpl/card/department/transit/index.html',
-					//                controller: 'cardDepartmentTransitCtrl',
-					//                params:{'deptName':'','hosOrgCode':'','topHosDeptCode':''},
-					//                resolve: {
-					//                  deps: ['$ocLazyLoad',
-					//                    function( $ocLazyLoad ){
-					//                      return $ocLazyLoad.load(['js/controllers/card/registered.js']);
-					//                  }]
-					//                }
-					//            })
 
 					//   挂号 选择医生
 					.state('app.card.department.registered', {
@@ -130,7 +105,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									//return $ocLazyLoad.load(['js/controllers/card/registered.js']);
+									return $ocLazyLoad.load(['js/controllers/card/department/registered/index.js']);
 								}
 							]
 						}
@@ -150,7 +125,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									//return $ocLazyLoad.load(['js/controllers/card/registered.js']);
+									return $ocLazyLoad.load(['js/controllers/card/department/registered/docinfo/index.js']);
 								}
 							]
 						}
@@ -173,7 +148,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									//return $ocLazyLoad.load(['js/controllers/card/registered.js']);
+									return $ocLazyLoad.load(['js/controllers/card/department/registered/docinfo/dep/index.js']);
 								}
 							]
 						}
@@ -187,7 +162,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/card/book.js']);
+									return $ocLazyLoad.load(['js/controllers/card/book/index.js']);
 								}
 							]
 						}
@@ -205,7 +180,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/recharge/recharge.js']);
+									return $ocLazyLoad.load(['js/controllers/recharge/index.js']);
 								}
 							]
 						}
@@ -215,7 +190,14 @@ angular.module('app')
 					.state('app.recharge.recharge', {
 						url: '/recharge',
 						templateUrl: 'tpl/recharge/recharge/index.html',
-						controller: 'rechargeRechargeCtrl'
+						controller: 'rechargeRechargeCtrl',
+						resolve: {
+							deps: ['$ocLazyLoad',
+								function($ocLazyLoad) {
+									return $ocLazyLoad.load(['js/controllers/recharge/recharge/index.js']);
+								}
+							]
+						}
 					})
 
 					//   现金充值
@@ -242,13 +224,27 @@ angular.module('app')
 					.state('app.recharge.payment', {
 						url: '/payment',
 						templateUrl: 'tpl/recharge/payment/index.html',
-						controller: 'rechargePaymentCtrl'
+						controller: 'rechargePaymentCtrl',
+						resolve: {
+							deps: ['$ocLazyLoad',
+								function($ocLazyLoad) {
+									return $ocLazyLoad.load(['js/controllers/recharge/payment/index.js']);
+								}
+							]
+						}
 					})
 					//   缴费 - 支付
 					.state('app.recharge.payment.pay', {
 						url: '/pay',
 						templateUrl: 'tpl/recharge/payment/pay/index.html',
-						controller: 'rechargePaymentPayCtrl'
+						controller: 'rechargePaymentPayCtrl',
+						resolve: {
+							deps: ['$ocLazyLoad',
+								function($ocLazyLoad) {
+									return $ocLazyLoad.load(['js/controllers/recharge/payment/pay/index.js']);
+								}
+							]
+						}
 					})
 
 					//  =======================  / 缴费  ==========================
@@ -262,7 +258,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/index.js']);
 								}
 							]
 						}
@@ -276,7 +272,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/index.js']);
 								}
 							]
 						}
@@ -295,13 +291,13 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/department/index.js']);
 								}
 							]
 						}
 					})
 
-					//   预约挂号 - 二级科室
+					//   预约挂号 - 二级科室(专科名称)
 					.state('app.reservation.restime.department.transit', {
 						url: '/transit',
 						templateUrl: 'tpl/reservation/restime/department/transit/index.html',
@@ -315,7 +311,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/department/transit/index.js']);
 								}
 							]
 						}
@@ -335,7 +331,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/department/transit/registered/index.js']);
 								}
 							]
 						}
@@ -356,7 +352,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/department/transit/registered/docinfo/index.js']);
 								}
 							]
 						}
@@ -370,7 +366,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/reservation.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/restime/department/transit/registered/docinfo/dep/index.js']);
 								}
 							]
 						}
@@ -384,7 +380,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/reservation/take.js']);
+									return $ocLazyLoad.load(['js/controllers/reservation/take/index.js']);
 								}
 							]
 						}
@@ -403,6 +399,20 @@ angular.module('app')
 							]
 						}
 					})
+					
+					//  网络当班挂号凭条打印 - 列表/打印
+					.state('app.reservation.department', {
+						url: '/department',
+						templateUrl: 'tpl/reservation/department/index.html',
+						controller: 'reservationDepartmentCtrl',
+						resolve: {
+							deps: ['$ocLazyLoad',
+								function($ocLazyLoad) {
+									return $ocLazyLoad.load(['js/controllers/reservation/department/index.js']);
+								}
+							]
+						}
+					})
 
 					//  =======================  / 预约  ==========================
 
@@ -415,25 +425,11 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/clinic/clinic.js']);
+									return $ocLazyLoad.load(['js/controllers/clinic/index.js']);
 								}
 							]
 						}
 					})
-
-					//             //   门诊处方 - 列表
-					//            .state('app.clinic.patient', {
-					//                url: '/patient',
-					//                templateUrl: 'tpl/clinic/patient/index.html',
-					//                controller: 'clinicPatientCtrl',
-					//                params:{'registegOrderID':'','ExamDT':''},
-					//                resolve: {
-					//                  deps: ['$ocLazyLoad',
-					//                    function( $ocLazyLoad ){
-					//                      return $ocLazyLoad.load(['js/controllers/clinic/clinic.js']);
-					//                  }]
-					//                }
-					//            })
 
 					//   门诊处方 - 明细
 					.state('app.clinic.info', {
@@ -449,7 +445,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/clinic/clinic.js']);
+									return $ocLazyLoad.load(['js/controllers/clinic/info/index.js']);
 								}
 							]
 						}
@@ -466,7 +462,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/hospital/hospital.js']);
+									return $ocLazyLoad.load(['js/controllers/hospital/index.js']);
 								}
 							]
 						}
@@ -480,7 +476,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/hospital/hospital.js']);
+									return $ocLazyLoad.load(['js/controllers/hospital/day/index.js']);
 								}
 							]
 						}
@@ -502,7 +498,7 @@ angular.module('app')
 								function($ocLazyLoad) {
 									return $ocLazyLoad.load(['ui.select']).then(
 										function() {
-											return $ocLazyLoad.load(['js/controllers/hospital/hospital.js']);
+											return $ocLazyLoad.load(['js/controllers/hospital/total/index.js']);
 										}
 									);
 								}
@@ -527,7 +523,7 @@ angular.module('app')
 								function($ocLazyLoad) {
 									return $ocLazyLoad.load(['ui.select']).then(
 										function() {
-											return $ocLazyLoad.load(['js/controllers/hospital/hospital.js']);
+											return $ocLazyLoad.load(['js/controllers/hospital/total/info/index.js']);
 										}
 									);
 								}
@@ -545,7 +541,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/medicine/medicine.js']);
+									return $ocLazyLoad.load(['js/controllers/medicine/index.js']);
 								}
 							]
 						}
@@ -562,7 +558,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/medicine/medicine.js']);
+									return $ocLazyLoad.load(['js/controllers/medicine/info/index.js']);
 								}
 							]
 						}
@@ -578,7 +574,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/assay/assay.js']);
+									return $ocLazyLoad.load(['js/controllers/assay/index.js']);
 								}
 							]
 						}
@@ -595,7 +591,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/assay/assay.js']);
+									return $ocLazyLoad.load(['js/controllers/assay/info/index.js']);
 								}
 							]
 						}
@@ -612,7 +608,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/feeslist/feeslist.js']);
+									return $ocLazyLoad.load(['js/controllers/feeslist/index.js']);
 								}
 							]
 						}
@@ -629,35 +625,7 @@ angular.module('app')
 						resolve: {
 							deps: ['$ocLazyLoad',
 								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/networkpayment/networkpayment.js']);
-								}
-							]
-						}
-					})
-
-					//  网络缴费凭条打印 - 列表/打印
-					.state('app.networkpayment.clinic', {
-						url: '/clinic',
-						templateUrl: 'tpl/networkpayment/clinic/index.html',
-						controller: 'networkpaymentClinicCtrl',
-						resolve: {
-							deps: ['$ocLazyLoad',
-								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/networkpayment/clinic/clinic.js']);
-								}
-							]
-						}
-					})
-
-					//  网络当班挂号凭条打印 - 列表/打印
-					.state('app.networkpayment.department', {
-						url: '/department',
-						templateUrl: 'tpl/networkpayment/department/index.html',
-						controller: 'networkpaymentDepartmentCtrl',
-						resolve: {
-							deps: ['$ocLazyLoad',
-								function($ocLazyLoad) {
-									return $ocLazyLoad.load(['js/controllers/networkpayment/department/department.js']);
+									return $ocLazyLoad.load(['js/controllers/networkpayment/index.js']);
 								}
 							]
 						}

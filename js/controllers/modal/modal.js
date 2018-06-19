@@ -2,7 +2,7 @@
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:36:00 
  * @Last Modified by: wu
- * @Last Modified time: 2018-03-16 13:34:58
+ * @Last Modified time: 2018-06-01 17:39:14
  */
 'use strict';
 
@@ -129,14 +129,7 @@ app.controller('modalErrorCtrl', function($scope, $interval, $modal, $modalInsta
 	};
 
 	var run = function() {
-		//   播放声音
-		//		$timeout(function(){
-		//			$scope.items.scope.audio_list.allStop();
-		//			$scope.items.scope.audio_list.play('audio_011');
-		//		},1000);
-
 		$scope.modal_data.msg = $scope.items.msg;
-
 	}
 	run();
 
@@ -145,8 +138,11 @@ app.controller('modalErrorCtrl', function($scope, $interval, $modal, $modalInsta
 /**
  * 插卡弹窗
  */
-app.controller('modalCardInCtrl', function($scope, $interval, $modal, httpService, $modalInstance, items) {
+app.controller('modalCardInCtrl', function ($scope, $interval, $modal, httpService, $modalInstance, items, $timeout) {
 
+	//   当前页面返回秒数
+	$scope.countdown_time = 20;
+	
 	$scope.items = items;
 
 	$scope.showBack = true;
@@ -164,7 +160,7 @@ app.controller('modalCardInCtrl', function($scope, $interval, $modal, httpServic
 		if(nb == 0) {
 			$interval.cancel(tmr);
 			$scope.msgBody = '读取用户超时';
-			$scope.items.scope.app.user_info = null;
+			//	$scope.items.scope.app.user_info = null;
 			$scope.showBack = true;
 		}
 	}, 500);
@@ -182,6 +178,19 @@ app.controller('modalCardInCtrl', function($scope, $interval, $modal, httpServic
 		$modalInstance.close(false);
 	};
 
+	//   自动退出
+	var time_out = function () {
+		if ($scope.countdown_time < 1){
+			$scope.cancel();
+		}else{
+			$scope.countdown_time = $scope.countdown_time - 1;
+			$timeout(function () {
+				time_out();
+			},1000);
+		}
+	}
+	
+
 	//   run
 	var run = function() {
 		//   播放声音
@@ -191,6 +200,8 @@ app.controller('modalCardInCtrl', function($scope, $interval, $modal, httpServic
 		//   亮灯
 		//  灯光提示
 		window.terminal && window.terminal.JSOpenTwinkleLED('6');
+		//   自动退出
+		time_out();
 	}
 	run();
 

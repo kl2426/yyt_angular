@@ -4,7 +4,9 @@
 		<div class="m-index">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
-				<div class="title"><font color="#f05050">请选择您要预约的日期</font></div>
+				<div class="title">
+					<font color="#f05050">请选择您要预约的日期</font>
+				</div>
 				<div class="time">
 					<div class="time-bg">
 						<span>{{countdown_time}}</span>
@@ -15,7 +17,9 @@
 			<div class="m-card-department">
 				<div class="text-center">
 					<ul>
-						<li class="one-ks" ng-repeat="item in data.date_week"><a ui-sref="app.reservation.restime.department({restime:item.val, restime_date_week:item.week})"><span>{{item.val}}<br />{{item.week}}</span></a></li>
+						<li class="one-ks" ng-repeat="item in data.date_week">
+							<a ui-sref="app.reservation.restime.department({restime:item.val, restime_date_week:item.week})"><span>{{item.val}}<br />{{item.week}}</span></a>
+						</li>
 					</ul>
 				</div>
 				<div class="registered-page">
@@ -26,8 +30,7 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
 	</div>
 </div>

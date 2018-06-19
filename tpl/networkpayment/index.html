@@ -1,61 +1,109 @@
 <div ui-view>
 	<div class="container">
-		<div class="m-index">
+
+		<!--  -->
+		<div class="g-header m-header" style="position: absolute;top: 0; width:100%;" ng-hide="show_back">
+			<div class="header-logo" ng-click="maintain.click(maintain.number)">
+				<a>
+					<img src="img/common/logo.png" />
+				</a>
+			</div>
+		</div>
+		
+
+		<div class="m-index" ng-if="status == 1">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
-				<div class="title">请选择您要办理的业务</div>
+				<div class="title">
+					网络缴费凭条打印：
+					<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					<div class="m-hospital-date">
+						选择缴费日期：
+						<input class="form-control" type="text" ng-model="data.form.startDate" lay-date data-laytype="date" data-scope="data.form.startDate" placeholder="选择开始日期" /> &nbsp;-&nbsp;
+						<input class="form-control" type="text" ng-model="data.form.endDate" lay-date data-laytype="date" data-scope="data.form.endDate" placeholder="选择结束日期" />
+					</div>
+				</div>
 				<div class="time">
 					<div class="time-bg">
 						<span>{{countdown_time}}</span>
 					</div>
 				</div>
 			</div>
-			<div class="m-index-list">
-				<div class="text-center">
-					<ul>
-						<li class="bg-color bg-color-001" ng-hide="!routerMenuArr['app.networkpayment.clinic'].hasMenu">
-							<a ng-click="openSref('app.networkpayment.clinic')">
-								<i class="icon-008"></i>
-								<div>
-									<h4>缴费凭条打印</h4>
-									<p>缴费凭条打印</p>
-								</div>
-							</a>
-						</li>
-						<li class="bg-color bg-color-002" ng-hide="!routerMenuArr['app.networkpayment.department'].hasMenu">
-							<a ng-click="openSref('app.networkpayment.department')">
-								<i class="icon-008"></i>
-								<div>
-									<h4>网络挂号凭条打印</h4>
-									<p>网络挂号凭条打印</p>
-								</div>
-							</a>
-						</li>
 
-						<!-- <li class="bg-color bg-color-001">
-							<a ui-sref="app.networkpayment.clinic">
-								<i class="icon-001"></i>
-								<div>
-									<h4>缴费凭条打印</h4>
-									<p>缴费凭条打印</p>
-								</div>
-							</a>
-						</li>
-						<li class="bg-color bg-color-002">
-							<a ui-sref="app.networkpayment.department">
-								<i class="icon-001"></i>
-								<div>
-									<h4>网络凭条打印</h4>
-									<p>网络凭条打印</p>
-								</div>
-							</a>
-						</li> -->
-						
-					</ul>
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>执行科室</th>
+							<th>金额</th>
+							<th style="text-align: center;">操作</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.index}}</td>
+							<td>{{item.all_ExecDeptName}}</td>
+							<td>{{item.price}}</td>
+							<td style="text-align: center;">
+								<label ng-if="item.has_print == false"><i class="fa" ng-class="{true:'fa-check-square-o',false:'fa-square-o'}[item.checked ? true : false]"></i><input type="checkbox" ng-model="item.checked" ng-checked="item.checked" /></label>
+								<span ng-if="item.has_print == true">已打印</span>
+							</td>
+						</tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+						<div class="pull-right">
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue" ng-disabled="!btn_out_all" ng-if="data.page.row.length > 0" ng-click="outMark()">打印</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
+
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>系统正在处理，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+
+		<!--  取号成功   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>取号成功,请取走您的凭条。
+						<br/>您本次打印凭条
+						<b style="font-weight: bold;color:red;">{{data.print_arr.length}}</b>张（如有疑问请联系工作人员）
+					</span>
+				</div>
+			</div>
+		</div>
+
 	</div>
-</div>
+</div>	

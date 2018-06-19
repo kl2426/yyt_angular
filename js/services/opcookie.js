@@ -10,9 +10,8 @@
  */
 var DOCUMENT = document;
 
-
 angular.module('app').factory('opCookie', function($window) {
-	
+
 	//设置cookie  
 	var setCookie = function(cname, cvalue, seconds) {
 		var d = new Date();
@@ -20,6 +19,7 @@ angular.module('app').factory('opCookie', function($window) {
 		var expires = "expires=" + d.toUTCString();
 		DOCUMENT.cookie = cname + "=" + cvalue + "; " + expires;
 	}
+
 	//获取cookie  
 	var getCookie = function(cname) {
 		var name = cname + "=";
@@ -31,21 +31,20 @@ angular.module('app').factory('opCookie', function($window) {
 		}
 		return "";
 	}
+
 	//清除cookie    
 	var clearCookie = function(name) {
 		var exp = new Date();
 		exp.setTime(exp.getTime() - 1);
-		var cval=getCookie(name);
-		if(cval!=null)
-		DOCUMENT.cookie= name + "="+cval+";expires="+exp.toGMTString();
+		var cval = getCookie(name);
+		if(cval != null)
+			DOCUMENT.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 	}
-
-	
 
 	//
 	return {
-		setCookie:setCookie,
-		getCookie:getCookie,
-		clearCookie:clearCookie
+		setCookie: setCookie,
+		getCookie: getCookie,
+		clearCookie: clearCookie
 	};
 });

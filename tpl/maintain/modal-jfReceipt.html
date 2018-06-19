@@ -1,0 +1,72 @@
+<!--   凭条补打界面      -->
+<div class="m-modal-maintain-menu">
+	<div class="container">
+		<div class="m-maintain-header">
+			<div class="header-title">维护中心 - 菜单 - 门诊缴费凭条补打</div>
+			<div class="header-close">
+				<a class="btn btn-info btn-002" ng-click="cancel()">退&nbsp;出</a>
+			</div>
+		</div>
+
+		<!--   提示    -->
+		<div class="m-card-header clearfix" style="padding-bottom:0; padding-top:0; min-height:auto;">
+			<div class="title">
+				<font color="#f05050">
+					姓名：{{items.scope.app.user_info.PatName}} {{items.scope.app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{items.scope.app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{items.scope.app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+				</font>
+			</div>
+		</div>
+
+		<div class="login-body">
+			<!--   预约取号   -->
+			<div class="m-take-list">
+				<div class="list-body">
+					<div style="margin-bottom: 10px;">
+						<span>输入查询日期：</span>
+						<input class="form-control" style="width:150px; display:inline-block;" type="text" ng-model="data.form.regDate" lay-date data-laytype="date" data-scope="data.form.regDate" placeholder="选择开始日期" />
+					</div>
+					<table>
+						<tr>
+							<th style="text-align: center;">序号</th>
+							<th>科室名称</th>
+							<th>处方号</th>
+							<th>处方类型</th>
+							<th>金额</th>
+							<th style="text-align: center;">操作</th>
+						</tr>
+						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
+							<td style="text-align: center;">{{item.index}}</td>
+							<td>{{item.DeptName}}</td>
+							<td>{{item.PrescriptionID}}</td>
+							<td>{{item.PrescriptionType}}</td>
+							<td>{{item.TotalFee}}</td>
+							<td style="text-align: center;">
+								<label><i class="fa"
+                          ng-class="{true:'fa-check-square-o',false:'fa-square-o'}[item.checked ? true : false]"></i><input
+                  type="checkbox" ng-click="chekced_click(item)" ng-checked="item.checked"/></label>
+							</td>
+						</tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
+					</table>
+					<div class="page clearfix">
+						<span class="pull-left"></span>
+
+						<div class="pull-right">
+							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
+							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-blue" ng-if="data.page.row.length > 0" ng-click="outMark()">补打</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

@@ -19,14 +19,17 @@
 			<div class="m-card-department">
 				<div class="text-center">
 					<ul>
-						<li class="btn one-mz" ng-class="{'disabled':item.last_no < 1 || !item.ampm_show}" ng-repeat="item in data.page.row" ui-sref="app.card.department.registered.docinfo.dep({deptName:deptName, doct_name:doct_name, sumMoney:item.sumMoney, am_pm:item.am_pm, schedulingID:item.pbxh, clinic_time_start:item.clinic_time_start, clinic_time_end:item.clinic_time_end})">
+						<li class="btn one-mz" ng-class="{'disabled':item.last_no < 1 || !item.ampm_show || item.is_vary == 0}" ng-repeat="item in data.page.row" ui-sref="app.card.department.registered.docinfo.dep({deptName:deptName, doct_name:doct_name, sumMoney:item.sumMoney, am_pm:item.am_pm, schedulingID:item.pbxh, clinic_time_start:item.clinic_time_start, clinic_time_end:item.clinic_time_end})">
 							<div class="one-morning"><span ng-if="ampm.val == item.am_pm" ng-repeat="ampm in data.am_pm">{{ampm.name}}</span></div>
 							<div class="one-body">
 								<div class="one-title">{{item.doct_name}} - （{{item.sumMoney}}元）</div>
 								<div class="one-type">{{item.clinic_type}}</div>
 								<div class="one-name">{{item.deptName}}</div>
 							</div>
-							<div class="one-nub"><span>余号：{{item.last_no >= 1 ? item.last_no : '无号'}}</span></div>
+							<div class="one-nub">
+								<span ng-if="item.is_vary != 0">排队号：{{item.source}}</span>
+								<span ng-if="item.is_vary == 0">排队号：停诊</span>
+							</div>
 						</li>
 
 						<li class="m-card-department-none" ng-if="items_loadding">

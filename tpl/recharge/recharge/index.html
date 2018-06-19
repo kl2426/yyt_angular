@@ -1,7 +1,7 @@
 <div ui-view>
 	<div class="container">
 
-		<!--   头   -->
+		<!--  -->
 		<div class="g-header m-header" style="position: absolute;top: 0; width:100%;" ng-hide="!(status == 6)">
 			<div class="header-logo" ng-click="maintain.click(maintain.number)">
 				<a>
@@ -10,8 +10,6 @@
 				{{data.form.money_money}}
 			</div>
 		</div>
-
-
 
 		<div class="m-index" ng-if="status == 1">
 			<!--   提示    -->
@@ -26,7 +24,7 @@
 			<!--   挂号    -->
 			<div class="m-card-dep">
 				<div class="dep-modal" style="width: 610px; padding: 40px;">
-					<h4>您选择您要查询的方式：</h4>
+					<h4>请选择您要查询的方式：</h4>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-click="statusID()">身份证</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-main" ng-click="statusCARD()">诊疗卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -34,19 +32,14 @@
 					</div>
 				</div>
 			</div>
-		
-		</div>
 
+		</div>
 
 		<!--  放置身份证  -->
 		<div class="m-card-id" ng-if="status == 2">
 			<div class="m-card-header clearfix">
 				<div class="title">
-					<p>
-						请把您的二代身份证放到有身份证标示的读卡区。
-						<br /> 如果您的身份证在银行申请过诊疗卡，确认后可以直接取卡，如果没有申请
-						<br /> 过，确认后，放入钞票。
-					</p>
+					<p>请把您的二代身份证放到有身份证标示的读卡区。</p>
 					<p>
 						<font size="4" color="red">注意：二代身份证应该放置在感应区，切勿插入卡口。</font>
 					</p>
@@ -57,27 +50,19 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-img">
 				<img src="img/module/card/card_id.png" />
 			</div>
 		</div>
 
-
 		<div class="m-index" ng-if="status == 3">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					住院预交金<br />
-					 姓名：{{PatName}} {{PatSex == 1 ? '&nbsp;男' : ''}} {{PatSex == 2 ? '&nbsp;女' : ''}} {{PatSex == 9 ? '&nbsp;未知' : ''}}
-					 &nbsp;年龄：无
-					 &nbsp;病区：无
-					 &nbsp;科室：{{data.patient.dept_name}}
-					 &nbsp;床号：{{data.patient.bed_no}}
-					 <br />
-					 &nbsp;费用：{{data.depoSum.depo_sum}}
-					 &nbsp;余额：{{data.depoSum.depo_left}}
-					 &nbsp;身份：无
+					住院预交金<br /> 姓名：{{PatName}} {{PatSex == 1 ? '&nbsp;男' : ''}} {{PatSex == 2 ? '&nbsp;女' : ''}} {{PatSex == 9 ? '&nbsp;未知' : ''}} &nbsp;年龄：无 &nbsp;病区：无 &nbsp;科室：{{data.patient.dept_name}} &nbsp;床号：{{data.patient.bed_no}}
+					<br />
+					<!--费用：{{data.depoSum.NoAccountSum}}-->预交金总额：{{data.depoSum.depo_sum}}元 &nbsp;身份：无
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -85,7 +70,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
 				<div class="list-body">
@@ -97,7 +82,7 @@
 							<th>缴费方式</th>
 						</tr>
 						<tr ng-repeat="item in data.page.row" ng-class="{true:'checked'}[item.checked ? true : false]">
-							<td>{{item.DepoDate}}</td>
+							<td>{{item.DepoDate | formatTime}}</td>
 							<td>{{item.depo_amount}}</td>
 							<td>{{item.ZT}}</td>
 							<td>{{item.ZFFS}}</td>
@@ -114,8 +99,8 @@
 						<div class="pull-right">
 							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
 							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
-							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a ng-if="show_btn" class="btn btn-blue btn-danger" ng-click="confirm_userinfo()">充值</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a ng-if="show_btn" class="btn btn-blue btn-danger" ng-click="confirm_userinfo()">补交</a>
 						</div>
 					</div>
 				</div>
@@ -138,7 +123,7 @@
 			<!--   挂号    -->
 			<div class="m-card-dep">
 				<div class="dep-modal">
-					<h4>您确认要充值的用户信息：</h4>
+					<h4>请您确认要补交的用户信息：</h4>
 					<p>住院号：{{data.inpatient[0].InpatientNo}}</p>
 					<p>患者姓名：{{data.inpatient[0].PatName}}</p>
 					<!-- <p>证件号：{{data.form.inp_no.substr(0,10) + '****' + data.form.inp_no.substr(-4,4)}}</p> -->
@@ -147,19 +132,20 @@
 						<span ng-if="data.inpatient[0].PatSex == 2">性别：女</span>
 						<span ng-if="data.inpatient[0].PatSex == 9">性别：其他</span>
 					</p>
-					<p>入院时间：{{data.inpatient[0].AdmissDate}}</p>
+					<p>入院时间：{{data.inpatient[0].AdmissDate | formatTime}}</p>
 					<p>入院科室编码：{{data.inpatient[0].Dept}}</p>
 					<p>科室名称：{{data.inpatient[0].DeptName}}</p>
+					<p>床号：{{data.patient.bed_no}}</p>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-click="payBtn()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-main" ng-click="locationBk()">取消</a>
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
 
-		<!--        银行充值       -->
+		<!--  银行充值      -->
 
 		<!--  选择充值方式   -->
 		<div class="m-index" ng-if="status == 4">
@@ -178,13 +164,14 @@
 					<h4>您选择您的充值方式？</h4>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-disabled="!routerMenuArr['app.recharge.recharge.btn1'].hasMenu" ng-click="payType('card')">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="payType('online')">在线支付</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-main" ng-disabled="!routerMenuArr['app.recharge.recharge.btn2'].hasMenu" ng-click="payType('money')">现金</a>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!--        银行充值	 -->
+		<!--   银行充值	-->
 		<!--  选择充值方式   -->
 		<div class="m-index" ng-if="status == 5">
 			<!--   提示    -->
@@ -274,16 +261,14 @@
 							</div>
 						</div>
 					</div>
-					<div class="dep-modal-btn hidden">
+					<!--<div class="dep-modal-btn hidden">
 						<a class="btn btn-main" ng-click="payCardPage()">确定</a>
-					</div>
+					</div>-->
 				</div>
 			</div>
 		</div>
-		<!--        /银行充值       -->
+		<!--   /银行充值       -->
 
-
-		<!--        现金充值 -->
 		<!--  现金充值   -->
 		<div class="m-card-id" ng-if="status == 6">
 			<div class="m-card-header clearfix">
@@ -294,7 +279,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-3-body">
 					<div class="col-xs-6 body-left">
@@ -313,14 +298,40 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
-		<!--        /现金充值       -->
+		<!--   /现金充值       -->
+		
+		<!--  扫码支付    -->	 
+		<div class="m-index" ng-if="status == 7">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--  扫码    -->
+			<div class="m-ecode-wrapper">
+				<div class="content" style="width: 610px; padding: 40px;">
+					<div class="ecode-wrapper">
+						<img ng-src="data:image/png;base64,{{data.ecodeInfo.base64String}}" alt="" width="300" height="300" />
+					</div>
+					<div class="disc">
+						<h4>支持以下扫码支付方式</h4>
+						<div class="logos">
+							<i class="pay-001"></i>
+							<i class="pay-002"></i>
+							<i class="pay-003"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 
-
-
-
-
+		</div>
+		<!--  / 扫码支付    -->	 
 
 		<!--   系统正在处理中   -->
 		<div class="m-card-id" ng-if="status == 10">
@@ -332,7 +343,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>系统正在处理，请稍后。。。</span>
@@ -350,14 +361,14 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>正在打印凭条，请稍后。。。</span>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--   成功   -->
 		<div class="m-card-id" ng-if="status == 12">
 			<!--   提示    -->
@@ -369,14 +380,13 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>缴费成功,请取走您的凭条，银行充值请取走银行卡。</span>
 				</div>
 			</div>
 		</div>
-
 
 	</div>
 </div>

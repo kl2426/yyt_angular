@@ -17,7 +17,7 @@
 							<a ng-click="openSref('app.reservation.restime')">
 								<i class="icon-001"></i>
 								<div>
-									<h4>预约挂号</h4>
+									<h4>现场预约</h4>
 									<p>预约本周日为止的挂号</p>
 								</div>
 							</a>
@@ -28,6 +28,15 @@
 								<div>
 									<h4>预约取号</h4>
 									<p>打印预约挂号凭条</p>
+								</div>
+							</a>
+						</li>
+						<li class="bg-color bg-color-003" ng-hide="!routerMenuArr['app.reservation.department'].hasMenu">
+							<a ng-click="openSref('app.reservation.department')">
+								<i class="icon-003"></i>
+								<div>
+									<h4 style="font-size: 28px;">当日网络挂号凭条打印</h4>
+									<p style="font-size: 16px;">当日网络挂号凭条打印</p>
 								</div>
 							</a>
 						</li>

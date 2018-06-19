@@ -2,7 +2,7 @@
  * @Author: wu 308822989@qq.com 
  * @Date: 2018-02-01 16:39:01 
  * @Last Modified by: wu
- * @Last Modified time: 2018-03-12 11:06:02
+ * @Last Modified time: 2018-06-02 10:13:18
  */
 'use strict';
 
@@ -55,7 +55,7 @@ angular.module('app')
 				//   服务器时间
 				server_time: 1507615982000,
 				server_time_week: '星期一'
-			}
+			};
 
 			// save settings to local storage
 			if(angular.isDefined($localStorage.settings)) {
@@ -107,7 +107,6 @@ angular.module('app')
 			//							parentcode: '0'
 			//						})
 			//						.then(function(data) {
-			//							console.log(data)
 			//							if(data.status == 200) {
 			//								var temp_nav = data.data;
 			//								//   组合code
@@ -122,8 +121,7 @@ angular.module('app')
 			//							} else {
 			//								//$scope.authError = 'Email or Password not right';
 			//							}
-			//						}, function(x) {
-			//							console.log(x)
+			//						}, function() {
 			//							$scope.authError = 'Server Error';
 			//						});
 			//				}
@@ -165,7 +163,7 @@ angular.module('app')
 							//   错误提示
 						}
 					});
-			}
+			};
 
 			//  路由权限表  用于菜单是否显示
 			$scope.routerMenuArr = {
@@ -237,6 +235,9 @@ angular.module('app')
 				'app.reservation.take': {
 					hasMenu: false
 				},
+				'app.reservation.department': {
+					hasMenu: false
+				},
 				'app.reservation.cancel': {
 					hasMenu: false
 				},
@@ -275,12 +276,6 @@ angular.module('app')
 				'app.networkpayment': {
 					hasMenu: false
 				},
-				'app.networkpayment.clinic': {
-					hasMenu: false
-				},
-				'app.networkpayment.department': {
-					hasMenu: false
-				},
 
 				//   住院预交金充值 银行卡充值 按钮
 				'app.recharge.recharge.btn1': {
@@ -294,9 +289,9 @@ angular.module('app')
 				//   住院总清单打印 按钮
 				'app.hospital.total.info.btn1': {
 					hasMenu: false
-				},
+				}
 
-			}
+			};
 
 			//   点击跳转路由
 			$scope.openSref = function(router_str) {
@@ -310,7 +305,7 @@ angular.module('app')
 					$scope.openInCard();
 				}
 
-			}
+			};
 
 			// =========================================================================
 
@@ -329,7 +324,7 @@ angular.module('app')
 					$scope.app.server_time = $scope.app.server_time + 1000;
 					$scope.app.server_time_week = weekday[new Date($scope.app.server_time).getDay()];
 				}, 1000);
-			}
+			};
 
 			//   返回上一级
 			$scope.locationBk = function(str) {
@@ -341,47 +336,49 @@ angular.module('app')
 				$state.go(route_url == 'app' ? 'app.index' : route_url, {}, {
 					reload: true
 				});
-			}
+			};
 
-			//、 ========================================  插卡退卡   ============================================
+			// ========================================  插卡退卡   ============================================
 			//   打开读卡器端口
 			$scope.openCardCom = function() {
 				//  alert('打开端口')
 				window.terminal && window.terminal.OpenTreatmentCard();
-			}
+			};
 
 			//   读诊疗卡
 			$scope.readCard = function() {
 				window.terminal && window.terminal.ReadTreatmentCard();
-			}
+			};
 
 			//   卡号取用户信息
 			$scope.getUserInfo = function(card_no) {
-				//  log
-				// window.terminal && window.terminal.WriteLog(card_no);
-				//
 				httpService.ajaxGet(httpService.API.href + '/api/yytBase/v1/patient/' + card_no)
 					.then(function(res) {
-						// log
-						// window.terminal && window.terminal.WriteLog(JSON.stringify(res));
-						//
 						if(res.succeed) {
 							//   写用户信息
 							var user_info = res.data.item;
 							user_info.card_no = card_no;
 							$scope.app.user_info = user_info;
+							// 去患者姓名前后空格
+							$scope.app.user_info.PatName = $.trim($scope.app.user_info.PatName);
 							//   关闭提示弹窗
 							if($scope.openInCard_modalInstance) {
 								$scope.openInCard_modalInstance.close(true);
 							}
-							$scope.$apply();
+							//   如果是首页 且没有打开维护 打开 开启自动退卡定时器
+							if ($state.current.name == "app.index" && !$scope.show_maintain){
+								//   自动退诊疗卡
+								tm.fnStopAutoRefreshfn(tm);
+								$scope.countdown_time = 30;
+								tm.fnAutoRefreshfn(tm);
+							}
+
 						} else {
 							$scope.outCard();
 							$scope.app.user_info = null;
-							$scope.$apply();
 						}
 					});
-			}
+			};
 
 			//   读卡回调
 			//   插卡完成回调 写用户信息
@@ -398,12 +395,17 @@ angular.module('app')
 					//  读卡失败
 					//  alert('读卡失败');
 				}
-			}
+			};
 
-			//   诊疗卡点击退卡
+			//   点击退卡
 			$scope.outCard = function() {
+				//   停止定时器 - 自动退诊疗卡
+				tm.fnStopAutoRefreshfn(tm);
 				//   硬件退卡
+				//	诊疗卡
 				window.terminal && window.terminal.CloseTreatmentCard();
+				//	社保卡
+				window.terminal && window.terminal.CloseSocialSecurityCard();
 				//   清空用户信息返回首页
 				$scope.app.user_info = null;
 				$scope.locationBk('app.index');
@@ -411,14 +413,14 @@ angular.module('app')
 				//   停止语音
 				$scope.audio_list.allStop();
 				//
-				$scope.audio_list.play('audio_010');
-			}
+				$scope.audio_list.play('audio_033');
+			};
 
 			//   诊疗卡退卡 无其他操作
 			$scope.outCard_null = function() {
 				//   硬件退卡
 				window.terminal && window.terminal.CloseTreatmentCard();
-			}
+			};
 
 			//   插卡
 			//   插卡弹窗句柄
@@ -443,27 +445,22 @@ angular.module('app')
 				});
 
 				$scope.openInCard_modalInstance.result.then(function(selectedItem) {
-					console.log(selectedItem)
 					//   返回首页
-					//  $scope.locationBk('app.index');
 					//  关插卡灯
-					// alert('关闭弹窗')
 					window.terminal && window.terminal.JSCloseTwinkleLED('6');
 
 				}, function() {
-					//$log.info('Modal dismissed at: ' + new Date());
-				});
-			}
 
-			//  ====
+				});
+			};
 
 			//   银行卡点击退卡
 			//   银行卡退卡
 			$scope.bankOutCard = function() {
 				window.terminal && window.terminal.CloseBankModel();
-			}
+			};
 
-			//、 ========================================  /插卡退卡   ============================================
+			// ========================================  /插卡退卡   ============================================
 
 			//   系统错误
 			$scope.systemError = function(str) {
@@ -488,14 +485,13 @@ angular.module('app')
 				});
 
 				modalInstance.result.then(function(selectedItem) {
-					//console.log(selectedItem)
 					//   返回首页
 					//$scope.locationBk('app.index');
 				}, function() {
-					//$log.info('Modal dismissed at: ' + new Date());
+
 				});
 
-			}
+			};
 			//   run 系统错误
 			//$scope.systemError();
 
@@ -517,11 +513,15 @@ angular.module('app')
 						$scope.maintain.number = 10;
 					}, 1500);
 				}
-			}
+			};
 			//   打开维护界面
 			$scope.ModalMaintainOpen = function() {
+				//  停止首页自动退卡
+				$scope.index_tm.fnStopAutoRefreshfn($scope.index_tm);
+				$scope.show_maintain = true;
+				//
 				var modalInstance = $modal.open({
-					templateUrl: 'tpl/maintain/modal_login.html',
+					templateUrl: 'tpl/maintain/modal-login.html',
 					controller: 'modalMaintainLoginCtrl',
 					windowClass: 'g-modal-none m-modal-maintain',
 					animation: false,
@@ -539,7 +539,7 @@ angular.module('app')
 						]
 					}
 				});
-			}
+			};
 
 			//  =========================  / 维护界面等  =============================
 
@@ -547,7 +547,7 @@ angular.module('app')
 			//   关闭
 			$scope.modelClosePay = null;
 
-			//   打开 
+			//   打开
 			$scope.modelOpenPay = function() {
 				$scope.modelClosePay = $modal.open({
 					templateUrl: 'tpl/modal/modal_pay.html',
@@ -563,14 +563,14 @@ angular.module('app')
 						}
 					}
 				});
-			}
+			};
 
 			//  =========================  / 银行支付遮罩层  ===========================
 
 			//  =========================  打印机无纸弹窗  =============================
 			$scope.modelClosePrintError = null;
 
-			//   打开 
+			//   打开
 			$scope.modelOpenPrintError = function(res_str) {
 				$scope.modelClosePrintError = $modal.open({
 					templateUrl: 'tpl/modal/modal_print_error.html',
@@ -587,7 +587,7 @@ angular.module('app')
 						}
 					}
 				});
-			}
+			};
 
 			// $scope.modelOpenPrintError('凭条打印机无纸请与工作人员联系');
 
@@ -602,7 +602,7 @@ angular.module('app')
 					str = str + '\n\n温馨提示：缴费失败但已扣费，请联系工作人员人工处理。\n此凭条清妥善保管';
 				}
 				return str;
-			}
+			};
 
 			//  =========================  / 打印失败凭条内容处理  ===========================
 
@@ -627,7 +627,6 @@ angular.module('app')
 				if(temp_bol) {
 					//   显示错误弹窗
 					$scope.modelOpenPrintError(temp_msg);
-					// $scope.systemError(temp_msg);
 				}
 
 				//   上报硬件信息
@@ -638,7 +637,7 @@ angular.module('app')
 					}
 				}, 10000);
 
-			}
+			};
 
 			//   硬件状态变化回调
 			terminal_device.device.cb_onChange = function(res) {
@@ -648,10 +647,10 @@ angular.module('app')
 				$scope.app.device_status = res;
 				//   自助机登录
 				//  $scope.getDeviceInfo(res.LoaclName1, res.LoaclMAC1);
-			}
+			};
 
 			//   硬件状态上报
-			//   0：终端机 1:凭条打印机 2:报告单打印机 3:密钥键盘 4:身份证读卡器 5:诊疗卡读卡器 6:银行卡读卡器 7:灯条 8:钱箱 9:条码扫描
+			//   0：终端机 1:凭条打印机 2:报告单打印机 3:密钥键盘 4:身份证读卡器 5:诊疗卡读卡器 6:银行卡读卡器 7:灯条 8:钱箱 9:条码扫描 10:诊疗卡发卡器
 			var upTerStatus = function(item) {
 				//   设备确定
 				var temp_device = '';
@@ -659,7 +658,7 @@ angular.module('app')
 					case 'null0':
 						temp_device = 0;
 						break;
-					case 'null1':
+					case 'PrintReceipt':
 						temp_device = 1;
 						break;
 					case 'Winspool':
@@ -686,6 +685,9 @@ angular.module('app')
 					case 'null9':
 						temp_device = 9;
 						break;
+					case 'TreatmentCardCreate':
+						temp_device = 10;
+						break;
 
 					default:
 						break;
@@ -701,7 +703,7 @@ angular.module('app')
 					partsOffStatus: item.RunStatus1 == 'ON' ? 'run' : 'error',
 					partsStatusNote: item.HardwareDriverError1,
 					runDate: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-				}
+				};
 				//
 				httpService.ajaxPost(httpService.API.href + '/api/yytMace/v1/upTerStatus', upTerStatus_item)
 					.then(function(res) {
@@ -712,7 +714,7 @@ angular.module('app')
 							//
 						}
 					});
-			}
+			};
 
 			//   硬件
 
@@ -727,34 +729,6 @@ angular.module('app')
 			$scope.audio_list = {
 				//   是否为返回
 				is_locationBk: true,
-
-				//				audio:[
-				//					{"id":"audio_001","name":"请选择您要办理的业务","src":"img/mp3/请选择您要办理的业务.ogg"},
-				//					{"id":"audio_002","name":"请插入您的诊疗卡","src":"img/mp3/请插入您的诊疗卡.ogg"},
-				//					{"id":"audio_003","name":"请将您的身份证放到对应区域以便读取您的证件信息","src":"img/mp3/请将您的身份证放到对应区域以便读取您的证件信息.ogg"},
-				//					{"id":"audio_004","name":"请选择您要挂号的科室","src":"img/mp3/请选择您要挂号的科室.ogg"},
-				//					{"id":"audio_005","name":"请选择您要预约的日期","src":"img/mp3/请选择您要预约的日期.ogg"},
-				//					{"id":"audio_006","name":"请确认您要办理的业务","src":"img/mp3/请确认您要办理的业务.ogg"},
-				//					{"id":"audio_007","name":"请投币，本机只接收100元面额纸币","src":"img/mp3/请投币，本机只接收100元面额纸币.ogg"},
-				//					{"id":"audio_008","name":"系统正在处理中，请稍候","src":"img/mp3/系统正在处理中，请稍候.ogg"},
-				//					{"id":"audio_009","name":"请取走您的凭条","src":"img/mp3/请取走您的凭条.ogg"},
-				//					{"id":"audio_010","name":"请取走您的诊疗卡","src":"img/mp3/请取走您的诊疗卡.ogg"},
-				//					{"id":"audio_011","name":"非常抱歉，系统发生故障，请移步到其他终端或到窗口办理","src":"img/mp3/非常抱歉，系统发生故障，请移步到其他终端或到窗口办理.ogg"},
-				//					{"id":"audio_012","name":"请选择您要挂号的专科名称","src":"img/mp3/请选择您要挂号的专科名称.ogg"},
-				//					{"id":"audio_013","name":"业务处理成功，请取走您的凭条","src":"img/mp3/业务处理成功，请取走您的凭条.ogg"},
-				//					{"id":"audio_014","name":"请将您的银行卡插入银联读卡器","src":"img/mp3/请将您的银行卡插入银联读卡器.ogg"},
-				//					{ "id": "audio_015", "name": "请确认您要待缴费的内容", "src":"img/mp3/请确认您要待缴费的内容.ogg"},
-				//					{ "id": "audio_016", "name": "请选择您要挂号的医生", "src":"img/mp3/请选择您要挂号的医生.ogg"},
-				//					{ "id": "audio_017", "name": "请取走您的银行卡", "src":"img/mp3/请取走您的银行卡.ogg"},
-				//					{ "id": "audio_018", "name": "请选择您要查询的日期", "src":"img/mp3/请选择您要查询的日期.ogg"},
-				//					{ "id": "audio_019", "name": "请选择您要挂号的时间段", "src":"img/mp3/请选择您要挂号的时间段.ogg"},
-				//					{ "id": "audio_020", "name": "请选择支付方式", "src":"img/mp3/请选择支付方式.ogg"},
-				//					{ "id": "audio_021", "name": "请插入您的银行卡", "src":"img/mp3/请插入您的银行卡.ogg"},
-				//					{ "id": "audio_022", "name": "请点击缴费按钮进行缴费", "src":"img/mp3/请点击缴费按钮进行缴费.ogg"},
-				//					{ "id": "audio_023", "name": "请取走您的诊疗卡，祝您早日康复", "src":"img/mp3/请取走您的诊疗卡，祝您早日康复.ogg"},
-				//					{ "id": "audio_024", "name": "请选择缴费的处方", "src":"img/mp3/请选择缴费的处方.ogg"},
-				//					{ "id": "audio_025", "name": "请选择取药的处方", "src":"img/mp3/请选择取药的处方.ogg"},
-				//				],
 				//  播放
 				play: function(dom_id) {
 					if(!$scope.audio_list.is_locationBk) {
@@ -784,7 +758,6 @@ angular.module('app')
 				},
 				//  全部停止
 				allStop: function() {
-					//$('ul[audio-list] audio').each(function(){
 					$('#audio_list audio').each(function() {
 						this.pause();
 						this.currentTime = 0.0;
@@ -841,7 +814,7 @@ angular.module('app')
 					return angular.copy($scope.setglobaldata.timer);
 				}
 			};
-			//console.log($state.current.name);
+
 			//   监听离开页面取消定时器
 			$rootScope.$on('$stateChangeSuccess',
 				function(event, toState, toParams, fromState, fromParams) {
@@ -872,7 +845,6 @@ angular.module('app')
 						||
 						(fromState.name == 'app.recharge.recharge' && toState.name != 'app.recharge.recharge')
 					) {
-						console.log('离开预约挂号自动退卡');
 						//  银行卡退卡
 						$scope.bankOutCard();
 						//  银行卡关灯
@@ -893,6 +865,51 @@ angular.module('app')
 			);
 			//  ========================= /定时器 =============================
 
+
+
+			//   当前页面返回秒数
+			$scope.countdown_time = 30;
+
+			//开始定义定时器
+			var tm = $scope.setglobaldata.gettimer("indexCtrl");
+			if (tm.Key != "indexCtrl") {
+				tm.Key = "indexCtrl";
+				tm.keyctrl = "app.index";
+				tm.fnAutoRefresh = function () {
+					console.log("开始调用定时器");
+					if (!($scope.app.user_info && $scope.app.user_info.card_no))return;
+					tm.interval = $interval(function () {
+						if ($scope.countdown_time > 0) {
+							$scope.countdown_time = $scope.countdown_time - 1;
+						} else {
+							$interval.cancel(tm.interval);
+							tm.interval = null;
+							//   退卡
+							$scope.outCard();
+						}
+					}, 1000);
+				};
+				tm.fnStopAutoRefresh = function () {
+					$scope.countdown_time = 30;
+					console.log("进入取消方法");
+					if (tm.interval != null) {
+						$interval.cancel(tm.interval);
+						tm.interval = null;
+						console.log("进入取消成功");
+					}
+					tm.interval = null;
+				};
+				$scope.setglobaldata.addtimer(tm);
+			}
+			//结束定义定时器
+
+			tm.fnAutoRefreshfn(tm);
+			//
+			$scope.index_tm = tm;
+			//   是否打开维护界面   true 打开  false 未打开
+			$scope.show_maintain = false;
+
+
 			//   run
 			var run = function() {
 				//   取nav菜单
@@ -903,7 +920,8 @@ angular.module('app')
 				getServerTime();
 				//   硬件初始触发
 				window.terminal && window.terminal.WEBJSInit('');
-			}
+			};
+
 			run();
 
 		}

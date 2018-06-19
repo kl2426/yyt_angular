@@ -4,11 +4,7 @@
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					报告单：<br />
-					姓名：{{app.user_info.PatName}}
-					{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-					{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-					{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					报告单：<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -16,10 +12,10 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
-				<div class="list-body">
+				<div class="list-body" style="min-height: 520px;">
 					<table>
 						<tr>
 							<th style="text-align: center;">序号</th>
@@ -43,11 +39,17 @@
 								<a class="btn btn-danger" ui-sref="app.assay.info({assay_no:item.assay_no})">明细</a>
 							</td>
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
-					<div class="page clearfix">
-						<span class="pull-left"></span>
+				</div>
+				<div class="m-card-department">
+					<div class="registered-page">
+						<span class="pull-left">本机只能查询报告单，如需打印请到2楼总服务台。</span>
 						<div class="pull-right">
 							<a class="btn btn-main" ng-if="!(data.page.pageIndex == 1)" ng-click="data.page.pageFn(data.page.pageIndex - 1)">上一页</a>
 							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
@@ -55,11 +57,6 @@
 					</div>
 				</div>
 			</div>
-			
-			
 		</div>
-		
-		
-		
 	</div>
 </div>

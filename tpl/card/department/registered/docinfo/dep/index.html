@@ -11,11 +11,7 @@
 			<div class="m-card-header clearfix">
 				<div class="title">
 					<font color="#f05050">
-						挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br />
-						姓名：{{app.user_info.PatName}}
-						{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-						{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-						{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+						挂号日期：{{app.server_time | date : 'yyyy年MM月dd日'}}&nbsp;{{app.server_time_week}}<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 						<br />
 					</font>
 				</div>
@@ -33,21 +29,20 @@
 					<p>时间：
 						<span ng-if="am_pm == 1">上午</span>
 						<span ng-if="am_pm == 2">下午</span>
-						<span ng-if="am_pm == 3">晚上</span>
-						&nbsp;{{clinic_time_start}}-{{clinic_time_end}}
+						<span ng-if="am_pm == 3">晚上</span> &nbsp;{{clinic_time_start}}-{{clinic_time_end}}
 					</p>
 					<p>科别：{{deptName}}</p>
 					<p>医生：{{doct_name}}</p>
-					<p>金额：<font color="red">{{sumMoney}}</font>元</p>
+					<p>金额：
+						<font color="red">{{sumMoney}}</font>元</p>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-click="statusOk()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-main" ng-click="locationBk('app.card.department.registered')">取消</a>
 					</div>
 				</div>
 			</div>
-			
-		</div>
 
+		</div>
 
 		<div class="m-index" ng-if="status == 11">
 			<!--   提示    -->
@@ -57,47 +52,18 @@
 			<!--   挂号    -->
 			<div class="m-card-dep">
 				<div class="dep-modal" style="width: 610px; padding: 40px;">
-					<h4>您选择您的支付方式？</h4>
+					<h4>请选择支付方式？</h4>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-click="statusFn1()">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-main disabled">支付宝</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-main disabled">微信</a>
+						<a class="btn btn-main" ng-click="statusFn4()">在线支付</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main disabled">现金</a>
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
 
-
-		
-		<!--   系统正在处理中   -->
-		<div class="m-card-id" ng-if="status == 2">
-			<div class="m-card-header clearfix">
-				<div class="title"></div>
-			</div>
-			
-			<div class="card-id-desc">
-				<div class="desc-msg">
-					<span>系统正在处理，请稍后。。。</span>
-				</div>
-			</div>
-		</div>
-		
-		<!--   正在打印凭条   -->
-		<div class="m-card-id" ng-if="status == 3">
-			<div class="m-card-header clearfix">
-				<div class="title"></div>
-			</div>
-			
-			<div class="card-id-desc">
-				<div class="desc-msg">
-					<span>正在打印凭条，请稍后。。。</span>
-				</div>
-			</div>
-		</div>
-		
-		<!--   挂号成功   -->
-		<div class="m-card-id" ng-if="status == 4">
+		<div class="m-index" ng-if="status == 12">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title"></div>
@@ -107,18 +73,76 @@
 					</div>
 				</div>
 			</div>
-			
+			<!--  扫码    -->
+			<div class="m-ecode-wrapper">
+				<div class="content" style="width: 610px; padding: 40px;">
+					<div class="ecode-wrapper">
+						<img ng-src="data:image/png;base64,{{data.ecodeInfo.base64String}}" alt="" width="300" height="300" />
+					</div>
+					<div class="disc">
+						<h4>支持以下扫码支付方式</h4>
+						<div class="logos">
+							<i class="pay-001"></i>
+							<i class="pay-002"></i>
+							<i class="pay-003"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--   系统正在处理中   -->
+		<div class="m-card-id" ng-if="status == 2">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
-					<span>
-						挂号成功,请取走您的挂号凭条。
-						<br>
-						温馨提示：“预约挂号取号，取号成功将不能更改或退换，请妥善保留凭证，不可遗失”。
-					</span>
+					<span>系统正在处理，请稍后。。。</span>
 				</div>
 			</div>
 		</div>
-	
-	
+
+		<!--   正在打印凭条   -->
+		<div class="m-card-id" ng-if="status == 3">
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>正在打印凭条，请稍后。。。</span>
+				</div>
+			</div>
+		</div>
+
+		<!--   挂号成功   -->
+		<div class="m-index" ng-if="status == 4">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--   挂号    -->
+			<div class="m-card-dep">
+				<div class="dep-modal" style="width: 610px; padding: 40px;">
+					<h4>是否需购买病历本：</h4>
+					<br>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main btn-xs" ui-sref="app.card">是</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main btn-xs" ui-sref="app.index">否</a>
+					</div>
+				</div>
+				<div class="tips">
+					温馨提示：“预约挂号取号，取号成功将不能更改或退换，请妥善保留凭证，不可遗失”。
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

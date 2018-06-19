@@ -1,10 +1,24 @@
 <div ui-view>
 	<div class="container">
+
+		<!--  -->
+		<div class="g-header m-header" style="position: absolute;top: 0; width:100%;" ng-hide="show_back">
+			<div class="header-logo" ng-click="maintain.click(maintain.number)">
+				<a>
+					<img src="img/common/logo.png" />
+				</a>
+			</div>
+		</div>
+
+
+
 		<div class="m-index" ng-if="status == 1">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					请确认您的待缴费内容<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					请确认您的待缴费内容&nbsp;&nbsp;&nbsp;&nbsp;
+					（缴费成功后请取走您的凭条）
+					<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -57,8 +71,37 @@
 			</div>
 
 		</div>
+		
+		<div class="m-index" ng-if="status == 12">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--  扫码    -->
+			<div class="m-ecode-wrapper">
+				<div class="content" style="width: 610px; padding: 40px;">
+					<div class="ecode-wrapper">
+						<img ng-src="data:image/png;base64,{{data.ecodeInfo.base64String}}" alt="" width="300" height="300" />
+					</div>
+					<div class="disc">
+						<h4>支持以下扫码支付方式</h4>
+						<div class="logos">
+							<i class="pay-001"></i>
+							<i class="pay-002"></i>
+							<i class="pay-003"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<!--     -->
+		</div>
+
+		<!--  -->
 		<div class="m-index" ng-if="status == 2">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
@@ -67,11 +110,11 @@
 			<!--   挂号    -->
 			<div class="m-card-dep">
 				<div class="dep-modal" style="width: 610px; padding: 40px;">
-					<h4>您选择您的支付方式？</h4>
+					<h4>请选择支付方式？</h4>
 					<div class="dep-modal-btn">
-						<a class="btn btn-main" ng-click="Payment()">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-main disabled">支付宝</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-main disabled">微信</a>
+						<a class="btn btn-main" ng-click="payment()">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="statusFn3()">在线支付</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main disabled">现金</a>
 					</div>
 				</div>
 			</div>
@@ -92,29 +135,30 @@
 		</div>
 
 		<!--   成功   -->
-		<!-- <div class="m-card-id" ng-if="status == 4"> -->
-		<!--   提示    -->
-		<!-- <div class="m-card-header clearfix">
-						<div class="title"></div>
-						<div class="time">
-							<div class="time-bg">
-								<span>{{countdown_time}}</span>
-							</div>
-						</div>
-					</div>
-				
-					<div class="card-id-desc">
-						<div class="desc-msg">
-							<span>缴费成功,请取走您的凭条与银行卡。
-							<br /> 如需发票请到七号窗口打印</span>
-						</div>
-					</div>
-				</div> -->
-
-		<!--   是否跳转到打印到药凭条    -->
-		<div class="m-index" ng-if="status == 4">
+		<div class="m-card-id" ng-if="status == 4">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-id-desc">
+				<div class="desc-msg">
+					<span>缴费成功,请取走您的凭条与银行卡。
+						<br/>您本次打印凭条<b style="font-weight: bold;color:red;">{{has_filter.length}}</b>张（如有疑问请联系工作人员）
+					<br /> 如需发票请到七号窗口打印</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--   是否跳转到打印到药凭条    -->
+		<!--<div class="m-index" ng-if="status == 4">-->
+		<!--   提示    -->
+		<!--<div class="m-card-header clearfix">
 				<div class="title">
 				</div>
 				<div class="time" ng-if="countdown_time > -1">
@@ -122,9 +166,9 @@
 						<span>{{countdown_time}}</span>
 					</div>
 				</div>
-			</div>
-			<!--   挂号    -->
-			<div class="m-card-dep">
+			</div>-->
+		<!--   挂号    -->
+		<!--<div class="m-card-dep">
 				<div style="text-align: center; font-size: 30px; color: #fff;  margin-bottom: -50px;">
 					<span>缴费成功,请取走您的凭条与银行卡。
 						<br /> 如需发票请到七号窗口打印</span>
@@ -138,9 +182,9 @@
 						<a class="btn btn-main" ng-click="locationBk()">取消</a>
 					</div>
 				</div>
-			</div>
+			</div>-->
 
-		</div>
+		<!--</div>-->
 
 	</div>
 </div>

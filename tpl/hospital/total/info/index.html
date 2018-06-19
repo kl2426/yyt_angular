@@ -1,21 +1,17 @@
 <!--  住院清单    -->
 <div ui-view>
 	<div class="container">
-		
+
 		<!--   返回按钮  -->
 		<div class="header-btn" style="position: absolute; right: 250px; top: 35px;">
 			<a class="btn btn-info btn-001" ng-click="changeStatus()"><img src="img/common/icon-bk.png" />返&nbsp;回</a>
 		</div>
-		
+
 		<div class="m-index">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					住院总清单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					姓名：{{PatName}}
-					{{PatSex == 1 ? '&nbsp;男' : ''}}
-					{{PatSex == 2 ? '&nbsp;女' : ''}}
-					{{PatSex == 9 ? '&nbsp;未知' : ''}}
+					住院总清单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 姓名：{{PatName}} {{PatSex == 1 ? '&nbsp;男' : ''}} {{PatSex == 2 ? '&nbsp;女' : ''}} {{PatSex == 9 ? '&nbsp;未知' : ''}}
 					<br />
 					<span ng-if="data.items.length > 0">住院天数：{{data.items[0].zy_ts}}天&nbsp;</span>
 					<span ng-if="data.items.length > 0">总费用：{{data.items[0].charge_total}}&nbsp;</span>
@@ -26,12 +22,10 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
-				
+
 				<div class="list-body">
 					<table>
 						<tr>
@@ -48,9 +42,14 @@
 							<td class="text-right">{{item.charge_amount}}</td>
 							<td class="text-right">{{item.charge}}</td>
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
+					<div style="text-align: right; font-size: 24px; margin-top: 10px;" ng-if="data.totalFee && data.totalFee > 0">总金额： {{data.totalFee}}元</div>
 					<div class="page clearfix">
 						<span class="pull-left"></span>
 						<div class="pull-right">
@@ -63,8 +62,7 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
 	</div>
 </div>

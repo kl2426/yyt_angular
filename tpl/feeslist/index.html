@@ -4,15 +4,10 @@
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					缴费详情：<br />
-					姓名：{{app.user_info.PatName}}
-					{{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}}
-					{{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-					{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					缴费详情：<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 					<div class="m-hospital-date">
 						选择缴费日期：
-						<input class="form-control" type="text" ng-model="data.form.startDate" lay-date data-laytype="date" data-scope="data.form.startDate" placeholder="选择开始日期" />
-						&nbsp;-&nbsp;
+						<input class="form-control" type="text" ng-model="data.form.startDate" lay-date data-laytype="date" data-scope="data.form.startDate" placeholder="选择开始日期" /> &nbsp;-&nbsp;
 						<input class="form-control" type="text" ng-model="data.form.endDate" lay-date data-laytype="date" data-scope="data.form.endDate" placeholder="选择结束日期" />
 					</div>
 				</div>
@@ -22,7 +17,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
 				<div class="list-body">
@@ -39,8 +34,12 @@
 							<td>{{item.quantum}}</td>
 							<td>{{item.item_price}}</td>
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
 					<div class="page clearfix">
 						<span class="pull-left"></span>
@@ -51,11 +50,8 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
-		
-		
-		
+
 	</div>
 </div>

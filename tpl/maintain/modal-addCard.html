@@ -1,0 +1,48 @@
+<div class="m-modal-maintain-login">
+	<div class="container">
+		<div class="m-maintain-header">
+			<div class="header-title">维护中心 - 菜单 - 加卡</div>
+			<div class="header-close">
+				<a class="btn btn-info btn-002" ng-click="cancel()">退&nbsp;出</a>
+			</div>
+		</div>
+		<div class="login-body">
+			<div class="m-card-id">
+				<div class="card-id-desc">
+					<div class="id-left" style="padding-top: 10px;">
+						<div class="left-mobile">
+							<span style="font-size: 28px;">余卡数量：{{form.residueNum}} 张</span>
+							<br /><br />
+							<div class="mobile">
+								<span style="width: 140px; font-size: 28px; text-align: left;">加卡数量：</span>
+								<div><input type="text" ng-model="form.count" ng-click="bindName('count')" /></div>
+							</div>
+							<p>{{form.tips_msg}}</p>
+							<div class="text-right">
+								<button class="btn btn-main" ng-click="addCard()">加卡</button>
+							</div>
+						</div>
+					</div>
+					<div class="id-right">
+						<ul>
+							<li><button ng-click="keyb(1)">1</button></li>
+							<li><button ng-click="keyb(2)">2</button></li>
+							<li><button ng-click="keyb(3)">3</button></li>
+							<li><button ng-click="keyb(4)">4</button></li>
+							<li><button ng-click="keyb(5)">5</button></li>
+							<li><button ng-click="keyb(6)">6</button></li>
+							<li><button ng-click="keyb(7)">7</button></li>
+							<li><button ng-click="keyb(8)">8</button></li>
+							<li><button ng-click="keyb(9)">9</button></li>
+							<li><button ng-click="keyb('backspace')">退格</button></li>
+							<li><button ng-click="keyb(0)">0</button></li>
+							<li><button ng-click="keyb('delete')">清除</button></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

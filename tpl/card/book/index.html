@@ -3,54 +3,105 @@
 		<div class="m-index" ng-if="status == 1">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
-				<div class="title"><font color="#f05050">姓名：邱瑜伽<br />账户余额：160.5元</font></div>
 				<div class="time">
 					<div class="time-bg">
 						<span>{{countdown_time}}</span>
 					</div>
 				</div>
 			</div>
-			<!--   挂号    -->
+			<!--  购买病历本    -->
 			<div class="m-card-dep">
 				<div class="dep-modal">
 					<h4>您确认要购买病历本吗？</h4>
-					<p>病历本费用：0.5（元）</p>
+					<p>病历本费用：{{data.item.chargePrice}}（元）</p>
 					<div class="dep-modal-btn">
-						<a class="btn btn-main" ng-click="statusFn1()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-main">取消</a>
+						<a class="btn btn-main" ng-click="statusOk()">确认</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="cancle()">取消</a>
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
+		<div class="m-index" ng-if="status == 11">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--  购买病历本    -->
+			<div class="m-card-dep">
+				<div class="dep-modal" style="width: 770px; padding: 40px;">
+					<h4>请选择支付方式？</h4>
+					<div class="dep-modal-btn">
+						<a class="btn btn-main" ng-click="statusFn1()">银行卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main" ng-click="statusFn4()">在线支付</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-main disabled">现金</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="m-index" ng-if="status == 12">
+			<!--   提示    -->
+			<div class="m-card-header clearfix">
+				<div class="title"></div>
+				<div class="time">
+					<div class="time-bg">
+						<span>{{countdown_time}}</span>
+					</div>
+				</div>
+			</div>
+			<!--  扫码    -->
+			<div class="m-ecode-wrapper">
+				<div class="content" style="width: 610px; padding: 40px;">
+					<div class="ecode-wrapper">
+						<img ng-src="data:image/png;base64,{{data.ecodeInfo.base64String}}" alt="" width="300" height="300" />
+					</div>
+					<div class="disc">
+						<h4>支持以下扫码支付方式</h4>
+						<div class="logos">
+							<i class="pay-001"></i>
+							<i class="pay-002"></i>
+							<i class="pay-003"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 		<!--   系统正在处理中   -->
 		<div class="m-card-id" ng-if="status == 2">
 			<div class="m-card-header clearfix">
 				<div class="title"></div>
 			</div>
-			
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>系统正在处理，请稍后。。。</span>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--   正在打印凭条   -->
 		<div class="m-card-id" ng-if="status == 3">
 			<div class="m-card-header clearfix">
 				<div class="title"></div>
 			</div>
-			
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>正在打印凭条，请稍后。。。</span>
 				</div>
 			</div>
 		</div>
-		
-		<!--   挂号成功   -->
+
+		<!--   购买病历本成功   -->
 		<div class="m-card-id" ng-if="status == 4">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
@@ -61,14 +112,13 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
-					<span>购买病历本成功,请取走您的凭条。<br />请到到就诊科室分诊台领取</span>
+					<span>购买病历本成功,请取走您的凭条。<br />请到就诊科室分诊台领取</span>
 				</div>
 			</div>
 		</div>
-	
-	
+		
 	</div>
 </div>

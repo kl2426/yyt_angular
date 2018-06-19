@@ -6,9 +6,7 @@
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					请选择您要取药的处方号<br />
-					姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}}
-					{{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
+					请选择您要取药的处方号<br /> 姓名：{{app.user_info.PatName}} {{app.user_info.PatSex == 1 ? '&nbsp;男' : ''}} {{app.user_info.PatSex == 2 ? '&nbsp;女' : ''}} {{app.user_info.PatSex == 9 ? '&nbsp;未知' : ''}}
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -16,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
 				<div class="list-body">
@@ -42,8 +40,12 @@
 								<a class="btn btn-danger" ui-sref="app.medicine.info({PrescRecordID:item.PrescRecordID})">明细</a>
 							</td>-->
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
 					<div class="page clearfix">
 						<span class="pull-left"></span>
@@ -52,13 +54,11 @@
 							<a class="btn btn-main" ng-if="!(data.page.total <= data.page.pageIndex * data.page.pageSize)" ng-click="data.page.pageFn(data.page.pageIndex + 1)">下一页</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a class="btn btn-blue btn-danger" ng-disabled="!show_btn" ng-if="data.page.row.length > 0" ng-click="medicine()">{{title_btn}}</a>
-							<!-- <a class="btn btn-blue btn-danger" ng-click="sendfy()">发药取号</a> -->
 						</div>
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
 
 		<!--   系统正在处理中   -->
@@ -66,14 +66,14 @@
 			<div class="m-card-header clearfix">
 				<div class="title"></div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>系统正在处理，请稍后。。。</span>
 				</div>
 			</div>
 		</div>
-		
+
 		<!--   成功   -->
 		<div class="m-card-id" ng-if="status == 3">
 			<!--   提示    -->
@@ -85,7 +85,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="card-id-desc">
 				<div class="desc-msg">
 					<span>取号成功,请取走您的取药凭条。</span>

@@ -22,7 +22,7 @@
 			<div class="m-card-department">
 				<div class="text-center">
 					<ul>
-						<li class="one-mz" style="height: 135px;" ng-class="{'disabled':item.last_no < 1}" ng-repeat="item in data.page.row" ng-click="openHref(item)">
+						<li class="one-mz" style="height: 135px;" ng-class="{'disabled':item.order_lave < 1}" ng-repeat="item in data.page.row" ng-click="openHref(item)">
 							<div class="one-morning"><span>{{item.timeRange}}</span></div>
 							<div class="one-body">
 								<div class="one-title">{{item.doctName}} - （{{item.visitCost}}元）</div>
@@ -30,7 +30,7 @@
 								<div class="one-type">{{item.visitLevel}}</div>
 								<div class="one-name">{{item.deptName}}</div>
 							</div>
-							<div class="one-nub"><span>余号：{{item.order_lave}}</span></div>
+							<div class="one-nub"><span>排队号：{{item.temp_order_arr[0] ? item.temp_order_arr[0] : '无'}}</span></div>
 						</li>
 						
 						<li class="m-card-department-none" ng-if="items_loadding">

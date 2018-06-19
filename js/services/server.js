@@ -260,8 +260,6 @@ angular.module('app').service('globalFn', function() {
 			}
 		}
 
-		console.log(tree);
-
 		//
 		var data_tree = [{
 			label: '全部菜单',
@@ -276,9 +274,6 @@ angular.module('app').service('globalFn', function() {
 				item.children[t_item].level = item.level + 1;
 			}
 		});
-
-		//console.log('level',data_tree);
-
 		return data_tree;
 	}
 
@@ -590,6 +585,21 @@ var audio_list_fn = function() {
 			"name": "请选择您要建卡的方式",
 			"src": "img/mp3/请选择您要建卡的方式.ogg"
 		},
+		{
+			"id": "audio_031",
+			"name": "请插入您的社保卡",
+			"src": "img/mp3/请插入您的社保卡.ogg"
+		},
+		{
+			"id": "audio_032",
+			"name": "请取走您的社保卡",
+			"src": "img/mp3/请取走您的社保卡.ogg"
+		},
+		{
+			"id": "audio_033",
+			"name": "请取走您的卡片",
+			"src": "img/mp3/请取走您的卡片.ogg"
+		}
 	];
 	for(var i in data_array) {
 		var dom_li = $('<li><h4>' + data_array[i].name + '</h4><audio id="' + data_array[i].id + '" controls><source type="audio/ogg"></audio></li>');

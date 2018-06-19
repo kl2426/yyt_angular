@@ -30,6 +30,8 @@ var terminal_device = {
 	build_card: {
 		//	身份证回调  
 		cb_id: null,
+		//	社保卡回调
+		cb_SINCard: null,
 		//  银行充值回调 
 		cb_money: null,
 		//  现金充值回调

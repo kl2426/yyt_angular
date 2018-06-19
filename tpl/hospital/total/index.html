@@ -1,8 +1,7 @@
 <!--  住院清单    -->
 <div ui-view>
 	<div class="container">
-		
-		
+
 		<div class="m-index" ng-if="status == 1">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
@@ -11,7 +10,7 @@
 			<!--   挂号    -->
 			<div class="m-card-dep">
 				<div class="dep-modal" style="width: 610px; padding: 40px;">
-					<h4>您选择您要查询的方式：</h4>
+					<h4>请选择您要查询的方式：</h4>
 					<div class="dep-modal-btn">
 						<a class="btn btn-main" ng-click="statusID()">身份证</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-main" ng-click="statusCARD()">诊疗卡</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -19,19 +18,17 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
-		
+
 		<!--  放置身份证  -->
 		<div class="m-card-id" ng-if="status == 2">
 			<div class="m-card-header clearfix">
 				<div class="title">
+					<p>请把您的二代身份证放到有身份证标示的读卡区。</p>
 					<p>
-						请把您的二代身份证放到有身份证标示的读卡区。<br />
-						如果您的身份证在银行申请过诊疗卡，确认后可以直接取卡，如果没有申请<br />
-						过，确认后，放入钞票。
+						<font size="4" color="red">注意：二代身份证应该放置在感应区，切勿插入卡口。</font>
 					</p>
-					<p><font size="4" color="red">注意：二代身份证应该放置在感应区，切勿插入卡口。</font></p>
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -39,22 +36,17 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="card-id-img">
 				<img src="img/module/card/card_id.png" />
 			</div>
 		</div>
-		
-		
+
 		<div class="m-index" ng-if="status == 3">
 			<!--   提示    -->
 			<div class="m-card-header clearfix">
 				<div class="title">
-					住院总清单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					姓名：{{PatName}}
-					{{PatSex == 1 ? '&nbsp;男' : ''}}
-					{{PatSex == 2 ? '&nbsp;女' : ''}}
-					{{PatSex == 9 ? '&nbsp;未知' : ''}}
+					住院总清单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 姓名：{{PatName}} {{PatSex == 1 ? '&nbsp;男' : ''}} {{PatSex == 2 ? '&nbsp;女' : ''}} {{PatSex == 9 ? '&nbsp;未知' : ''}}
 				</div>
 				<div class="time">
 					<div class="time-bg">
@@ -62,12 +54,10 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
+
 			<!--   预约取号   -->
 			<div class="m-take-list">
-				
+
 				<div class="list-body">
 					<table>
 						<tr>
@@ -85,13 +75,17 @@
 							<td>{{item.PatientId}}</td>
 							<td>{{item.PatName}}</td>
 							<td>{{item.Times}}</td>
-							<td>{{item.AdmissDate}}</td>
+							<td>{{item.AdmissDate | formatTime}}</td>
 							<td style="text-align: center;">
 								<a class="btn btn-danger" ui-sref="app.hospital.total.info({PatientID:item.PatientId, Times:item.Times, InpatientNo:item.InpatientNo, inp_no:data.form.inp_no, PatSex:PatSex, PatName:PatName})">明细</a>
 							</td>
 						</tr>
-						<tr ng-if="items_loadding"><td colspan="30" class="text-center">数据读取中</td></tr>
-						<tr ng-if="data.page.row.length < 1 && !items_loadding"><td colspan="30" class="text-center">未查询到数据</td></tr>
+						<tr ng-if="items_loadding">
+							<td colspan="30" class="text-center">数据读取中</td>
+						</tr>
+						<tr ng-if="data.page.row.length < 1 && !items_loadding">
+							<td colspan="30" class="text-center">未查询到数据</td>
+						</tr>
 					</table>
 					<div class="page clearfix">
 						<span class="pull-left"></span>
@@ -103,10 +97,8 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
 		</div>
-		
-		
+
 	</div>
 </div>
